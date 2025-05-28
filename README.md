@@ -36,20 +36,12 @@ This tool has been tested on the following systems:
  Phishing Tool for Instagram, Facebook,  Airbnb, Twitter, Snapchat, Github, Yahoo, Protonmail, Google, Spotify, Netflix, Linkedin, Wordpress, Origin, Steam, Microsoft, InstaFollowers, fortnite, cod...+33
 </p>
 
-# Workflow
-<img src="https://github.com/Samu23/README/blob/main/an.gif"/>
 
-# New Features 2023
-#### [+] Airbnb Phishing page !
-#### [+] CloudFlare Added !
-#### [+] Latest Login Pages !
-#### [+] LocalTunnel Added !
-#### [+] 5 Port Forwarding Options !
-#### [+] Discord and Roblox Phishing Pages Added !
 
 # Credits
-* <a href="https://t.me/Termux1_bot">Termux1_bot </a>
-* <a href="https://github.com/htr-tech/zphisher">htr-tech</a>
+* <a href="https://t.me/a_lonely_ooo">Termux1_bot </a>
+
+<h2> Inspired By <b>Anonphisher</b></h2>
 
 
 # Requirements
@@ -62,7 +54,7 @@ Linux system (RECOMMENDED)
 ```
 
 # Wanna encourage us? 
-To be able to encourage a_loney_ooo with he's tools, make sure you use and rate he's <a href="https://t.me/Termux1_bot">Telegram bot</a>
+To be able to encourage a_loney_ooo with he's tools, make sure you use and rate he's <a href="https://t.me/a_lonely_ooo">TeleG. ID</a>
 
 
 # Installation in Linux
@@ -72,12 +64,12 @@ git clone https://github.com/a_lonely_ooo/NetSnare
 cd NetSnare
 chmod 777 *  #for permission
 
-bash NetSnare.sh #without permission(recommecnded)
+bash NetSnare.sh #without permission(recommended)
 ```
 
 # Installation in Termux
 ```
-git clone https://github.com/a_lonely_ooo/NetSnare
+git clone https://github.com/a-lonely-ooo/NetSnare
 
 cd NetSnare
 
@@ -85,7 +77,7 @@ bash NetSnare.sh
 ```
 
 ## Installation via ".deb" file
-* Download <code>.deb</code> file from the <a href="https://github.com/a_lonely_ooo/NetSnare/releases/latest">Latest Release</a>
+* Download <code>.deb</code> file from the <a href="https://github.com/a-lonely-ooo/NetSnare/releases/latest">Latest Release</a>
 * If your using <b>Termux</b> download the one with <code>*_termux.deb</code>
 * Install the <code>.deb</code> file by Typing:
 ```
