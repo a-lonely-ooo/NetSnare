@@ -39,7 +39,7 @@ This tool has been tested on the following systems:
 
 
 # Credits
-* <a href="https://t.me/a_lonely_ooo">Termux1_bot </a>
+* <a href="https://t.me/a_lonely_ooo">TeleG. ID </a>
 
 <h2> Inspired By <b>Anonphisher</b></h2>
 
