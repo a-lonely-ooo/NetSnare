@@ -86,7 +86,7 @@ check_internet() {
 }
 
 dependencies() {
-    echo -e "\n${NeonBlue}[${BWhite}➕${NeonBlue}]${AcidGreen} Deploying Quantum Modules...${clear}"
+    echo -e "\n${NeonBlue}[${BWhite}➕${NeonBlue}]${AcidGreen} Deploying Quantum Modules(Can Take Some Time for First TIME)...${clear}"
     if [[ -d "/data/data/com.termux/files/home" ]]; then
         if [[ ! $(command -v proot) ]]; then
             echo -e "\n${NeonBlue}[${BWhite}➕${NeonBlue}]${AcidGreen} Installing Module: ${HotPink}proot${clear}"
