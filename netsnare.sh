@@ -868,7 +868,7 @@ tunnel_menu() {
     printf "${NeonBlue}┃${clear}\n"
     printf "${NeonBlue}┃ ${BAcidGreen}[01]${AcidGreen} LocalHost${clear}\n"
     printf "${NeonBlue}┃ ${BAcidGreen}[02]${AcidGreen} LocalXpose${clear}\n"
-    printf "${NeonBlue}┃ ${BAcidGreen}[03]${AcidGreen} CloudFlare${clear}\n"
+    printf "${NeonBlue}┃ ${BAcidGreen}[03]${AcidGreen} CloudFlare(Recommended)${clear}\n"
     printf "${NeonBlue}┃ ${BAcidGreen}[04]${AcidGreen} LocalTunnel${clear}\n"
     printf "${NeonBlue}┃ ${BAcidGreen}[00]${AcidGreen} Back${clear}\n"
     printf "${NeonBlue}┃${clear}\n"
